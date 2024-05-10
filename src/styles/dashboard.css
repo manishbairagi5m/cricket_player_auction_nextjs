@@ -1,0 +1,14 @@
+
+:root {
+  --maincolor : #47243C;
+  /* --maincolor : #8900AE ; */
+  --secondarycolor : #bca9b6;
+  --thirdcolor : #180238;
+}
+
+
+@media only screen and (max-width: 600px) {
+  
+}
+/* media query end */
+

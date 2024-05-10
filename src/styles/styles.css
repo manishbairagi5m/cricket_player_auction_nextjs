@@ -1,0 +1,354 @@
+:root {
+  --maincolor : #191966;
+  /* --maincolor : #8900AE ; */
+  --secondarycolor : #bca9b6;
+  --thirdcolor : #180238;
+}
+
+@media only screen and (max-width: 600px) {
+  .main-footer{
+    padding: 30px 0px 0px 0px !important;
+  }
+  .place-bid-item{
+    flex-direction: column;
+    text-align: center;
+    padding: 20px !important;
+  }
+  .dashboard-page {
+    background-size: auto 100vh !important;
+  }
+  .profile-my-alerts .col-1{
+    width: 8.333% !important;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ul {
+  list-style: none;
+}
+
+ul,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span {
+  margin: 0;
+  padding: 0;
+}
+
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+div,
+button {
+  /* font-family: "Roboto"; */
+  /* font-weight: 500; */
+  letter-spacing: 1.1px;
+}
+body{
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+.fs-14 {
+  font-size: 14px;
+}
+
+
+
+
+
+
+
+
+
+/* ==================================================== */
+/* quick css class */
+/* ==================================================== */
+
+.main-border{
+  border: 1px solid var(--secondarycolor);
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+.primary-color {
+  color:  var(--maincolor) ;
+}
+.primary-bg {
+  background-color:  var(--maincolor) ;
+}
+.text-underline {
+  text-decoration: underline;
+}
+.text-color-secondary{
+  color: #A2A2A2;
+}
+
+/* ==================================================== */
+/* quick css class */
+/* ==================================================== */
+
+
+
+
+
+
+.Toastify__toast-icon{
+  width: 30px;
+}
+
+.loader-page{
+  position: absolute;
+  background-color: var(--maincolor);
+  width: 100%;
+  height: 100vh;
+  /* top: 0; */
+  left: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+
+
+
+
+
+/* ==================================================== */
+/* for custom input  */
+/* ==================================================== */
+
+input[type="checkbox"]:checked {
+  background-color: var(--maincolor);
+  background-image: url(/Assets/Images/checked.png);
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+input[type="checkbox"]{
+  border: 1px solid var(--secondarycolor);
+  border-radius: 5px;
+  accent-color:var(--maincolor) ;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
+
+
+/* ==================================================== */
+/* for custom input  */
+/* ==================================================== */
+
+
+
+
+
+
+/* ==================================================== */
+/* custom buttons css */
+/* ==================================================== */
+
+.button-with-icon-shadow {
+  background: transparent;
+  box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  border: 1px solid #FFFFFF;
+  font-size: 16px;
+  padding: 8px 18px;
+  border-radius: 10px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.main-button {
+  background: #5DC02C;
+  text-align: center;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 6px;
+  color: white;
+}
+.main-button-blue {
+  background: var(--maincolor);
+  text-align: center;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 6px;
+  color: white;
+}
+
+.main-button:active, .button-with-icon-shadow:active {
+  transform: scale(0.9);
+  transition: 0.2s all ease;
+}
+
+.button-secondary{
+  background: transparent;
+  border: 1px solid var(--maincolor);
+  border-radius: 10px;
+  color: var(--maincolor);
+  padding: 10px 30px;
+}
+
+.white-bg-button{
+  background-color: white;
+  box-shadow: -1.04px 4.891px 20px 0px rgba(69, 49, 183, 0.5);
+  border: none;
+  padding: 10px 40px;
+  border-radius: 10px;
+  color: var(--maincolor);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.auth-bottom{
+  text-align: center;
+  font-size: 14px;
+}
+.auth-bottom span{
+  color: var(--maincolor);
+  text-decoration: underline;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ==================================================== */
+/* custom buttons css */
+/* ==================================================== */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ==================================================== */
+/* custom scroller */
+/* ==================================================== */
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #f5f5f5;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  background-color: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+  /* border-radius: 10px; */
+  border: 1px solid var(--secondarycolor);
+  background-color: var(--maincolor);
+  /* background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0.44, rgb(122, 153, 217)),
+    color-stop(0.72, rgb(73, 125, 189)),
+    color-stop(0.86, rgb(28, 58, 148))
+  ); */
+}
+
+/* ==================================================== */
+/* custom scroller */
+/* ==================================================== */
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+/* ==================================================== */
+/* text with underline animation css */
+/* ==================================================== */
+.underline-style{
+  cursor: pointer;
+  width: fit-content;
+  /* line-height: 0.1; */
+  /* margin-bottom: 20px; */
+  position: relative;
+}
+.underline-style::after{
+  transition: 0.5s all ease;
+  content: "";
+  position: absolute;
+  left: initial;
+  right:0;
+  bottom: 10px;
+  width: 0;
+  height: 1px;
+  background-color: white;
+}
+.underline-style:hover::after{
+  right: initial;
+  left: 0;
+  width: 100%;
+}
+/* ==================================================== */
+/* text with underline animation css */
+/* ==================================================== */
+
