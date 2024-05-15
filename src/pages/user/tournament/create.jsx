@@ -222,8 +222,8 @@ export default function AddTournament () {
     //   await addTournament(formdata).then((res) => {
     //     setLoader(false);
     //     if (res?.status === true) {
-    //       // navigate(`/tournament/sponsors/${res.data.data._id}`)
-    //       // sponsorRef.current.addSponsorsApi(res.data.data._id)
+    //       // navigate(`/tournament/sponsors/${res.data._id}`)
+    //       // sponsorRef.current.addSponsorsApi(res.data._id)
     //       toast.success(res?.message);
     //       router("/tournament");
     //     } else {

@@ -1,52 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { RiErrorWarningFill } from "react-icons/ri";
-import { MdModeEdit,MdDelete  } from "react-icons/md";
-import { FaPeopleGroup } from "react-icons/fa6";
-import { FaLocationDot } from "react-icons/fa6";
-import { FaCalendarAlt } from "react-icons/fa";
 import {
-  ClickAwayListener,
   DialogContent,
   FormControl,
   Grid,
   InputAdornment,
   InputLabel,
   MenuItem,
-  Pagination,
   Select,
   TextField,
-  Tooltip,
 } from "@mui/material";
 import {
-  Box,
   Button,
   Dialog,
   DialogActions,
   DialogTitle,
-  Fab,
-  Icon,
-  IconButton,
-  Slide,
   styled,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TablePagination,
-  TableRow,
 } from "@mui/material";
-import { toast } from "react-toastify";
-import {
-  FaArrowDown,
-  FaEye,
-  FaInfoCircle,
-  FaPencilAlt,
-  FaSearch,
-  FaTrashAlt,
-} from "react-icons/fa";
+import {  FaSearch } from "react-icons/fa";
 import { useRouter } from "next/navigation";
-import { Router } from "next/router";
-import Image from "next/image";
+import TournamentCard from "@/Components/Tournament/TournamentCard";
+import { getTournamentList } from "@/customApi/tournament"
 
 
 const Container = styled("div")(({ theme }) => ({
@@ -58,29 +31,14 @@ const Container = styled("div")(({ theme }) => ({
   },
 }));
 
-const StyledTable = styled(Table)(({ theme }) => ({
-  whiteSpace: "pre",
-  "& thead": {
-    "& tr": { "& th": { paddingLeft: 0, paddingRight: 0 } },
-  },
-  "& tbody": {
-    "& tr": { "& td": { paddingLeft: 0, textTransform: "capitalize",wordBreak:'break-word' } },
-  },
-}));
 
 export default function TounamentList() {
   const [loader, setLoader] = useState(false);
   const [state, setState] = useState<any>([]);
-  const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [sorting, setSorting] = useState("");
   const [date, setDate] = useState("");
   const [toolTip, setToolTip] = useState<any>("");
-  const [pagination, setPagination] = useState({
-    page: 1,
-    limit: 10,
-    totalRecord: 0,
-  });
 
   const [open, setOpen] = useState(false);
   const [deleteId, setDeleteId] = useState("");
@@ -94,7 +52,6 @@ export default function TounamentList() {
   const handleFilter = (params:any) => {
     getData(
       search,
-      pagination.page,
       date,
       ground,
       sortIcon[params].a === true ? sortIcon[params].b : sortIcon[params].c
@@ -105,9 +62,9 @@ export default function TounamentList() {
     });
   };
 
-  const getData = async (search?:any, per_page?:any, date_filter?:any, ground?:any, sort?:any) => {
+  const getData = async (search?:any, date_filter?:any, ground?:any, sort?:any) => {
     // setLoader(true);
-    let params : any = { page: per_page, limit: pagination.limit };
+    let params : any = {  };
     setGround(ground || "");
     if (search) {
       params = { ...params, search: search };
@@ -137,28 +94,18 @@ export default function TounamentList() {
       setGround(ground);
     }
 
-    // await getTournamentList(params).then((res) => {
-    //   setLoader(false);
-    //   if(res?.status){
-    //     setState(res?.data.data);
-    //     setPagination({
-    //       page: res?.data.pagination.page,
-    //       limit: res?.data.pagination.limit,
-    //       totalRecord: res?.data.pagination.totalRecord,
-    //     });
-    //   }
-    // });
+    await getTournamentList(params).then((res) => {
+      setLoader(false);
+      if(res?.status){
+        setState(res?.data);       
+      }
+    });
   };
 
   const handleToolTip = async (id:any) => {
     // await getToolTip(id).then((res) => {
     //   setToolTip(res?.data);
     // });
-  };
-
-  const handleChangePage = (selectedObject:any) => {
-    setPagination({ ...pagination, page: selectedObject.selected + 1 });
-    getData(search, selectedObject.selected + 1, date, ground, sorting);
   };
 
   const handleClose = () => {
@@ -180,7 +127,7 @@ export default function TounamentList() {
   };
 
   useEffect(() => {
-    getData("", page);
+    getData();
     // getToolTipData()
   }, []);
 
@@ -218,7 +165,7 @@ export default function TounamentList() {
                 variant="outlined"
                 size="small"
                 onChange={(e) => {
-                  getData(e.target.value, page, date, ground, sorting);
+                  getData(e.target.value, date, ground, sorting);
                 }}
               />
             </Grid>
@@ -231,7 +178,7 @@ export default function TounamentList() {
                 type="date"
                 name="from_date"
                 onChange={(e) =>
-                  getData(search, page, e.target.value, ground, sorting)
+                  getData(search, e.target.value, ground, sorting)
                 }
               />
             </Grid>
@@ -246,7 +193,7 @@ export default function TounamentList() {
                   label="Ground Type"
                   value={ground}
                   onChange={(e) =>
-                    getData(search, page, date, e.target.value, sorting)
+                    getData(search, date, e.target.value, sorting)
                   }
                 >
                   <MenuItem value="all">All</MenuItem>
@@ -271,50 +218,13 @@ export default function TounamentList() {
 
 
 <Grid container spacing={2} sx={{ mb: 2, mt: 1 }}>
-            <Grid item lg={4} md={3} sm={12} xs={12}>
-          <div className="tournament-card" 
-          onClick={()=> router.push(`/user/tournament/detail/sdjff12fsdf4sf5?tab=about`)}>
-            <div className="tournament-card-firsthalf">
-                <Image
-                    src="/Assets/Images/tournament-banner.jpg"
-                    width={400}
-                    height={250}
-                    alt="img"
-                    className="tournament-card-bgimage"
-                />
-                <Image
-                    src="/Assets/Images/pexels-photo-674010.jpeg"
-                    width={100}
-                    height={100}
-                    alt="img"
-                    className="tournament-card-logo"
-                />
-                <div className="tournament-card-status">Live</div>
-            </div>
-            <div className="tournament-card-secondhalf">
-                <p className="text-end">10 over
-                <Image
-                    src="/Assets/Images/tennis.png"
-                    width={50}
-                    height={50}
-                    alt="img"
-                    className="tournament-card-ball"
-                />
-                Turf
-                </p>
-                <h5>Indore Premier League</h5>
-                <p className="mb-3 mt-1"> <FaLocationDot className="fs-5" /> Mahesh Turf,Vijay Nagar,Indore</p>
-                <div className="tournament-card-data"> <FaCalendarAlt className="fs-5" /> From - 10 May 2023</div>
-                <div className="tournament-card-data"> <FaCalendarAlt className="fs-5" /> To   - 30 May 2023</div>
-                <div className="tournament-card-data"> <FaPeopleGroup className="fs-5" /> Team Registered - 5 
-                <RiErrorWarningFill className="ms-1 text-warning fs-6" /></div>
-                <div className="tournament-card-buttons">
-                    <div> <MdModeEdit /> </div>
-                    <div className="mb-2"> <MdDelete   className="text-danger" /> </div>
-                </div>
-            </div>
-          </div>
+          {state && Array.isArray(state) && state.length>0 && 
+          state.map((item:any,i:number)=> (
+            <Grid item lg={4} md={3} sm={12} xs={12} key={i}>
+              <TournamentCard data={item} />
           </Grid>
+          ))
+          }
           </Grid>
 
 

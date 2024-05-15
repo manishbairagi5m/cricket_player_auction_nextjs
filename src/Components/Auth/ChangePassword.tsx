@@ -1,5 +1,5 @@
 'use client'
-import CustomTextfield from "../StyledComponents/CustomTextfields";
+// import CustomTextfield from "../StyledComponents/CustomTextfields";
 import Modal from "react-bootstrap/Modal";
 import { FiEye } from "react-icons/fi";
 import { useFormik } from "formik";
@@ -11,6 +11,7 @@ import { useState } from "react";
 import Spinner from 'react-bootstrap/Spinner';
 import { useDispatch, useSelector } from "react-redux";
 import { setChangePassModal } from "@/lib/slice/modalsSlice";
+import { TextField } from "@mui/material";
 
 export interface IAppProps {}
 
@@ -61,6 +62,7 @@ export default function ChangePassword(props: IAppProps) {
     touched,
     setFieldValue,
     handleSubmit,
+    getFieldProps,
   } = formik;
 
 
@@ -82,7 +84,7 @@ export default function ChangePassword(props: IAppProps) {
                   className="col-12 mb-2 "
                   data-aos={`fade-${index%2===0 ? "left" : "right"}`}
                 >
-                 <CustomTextfield
+                 {/* <CustomTextfield 
                     name={item.name}
                     label={item.label}
                     type={item.name}
@@ -92,7 +94,18 @@ export default function ChangePassword(props: IAppProps) {
                     helperText={touched[item.name] && errors[item.name]}
                     error={Boolean(errors[item.name] && touched[item.name])}
                     Icon={item.Icon}
-                  />
+                  /> */}
+                   <TextField
+                      fullWidth
+                      size="small"
+                      type={item.type}
+                      label={item.label}
+                      variant="outlined"
+                      className="mb-2"
+                      {...getFieldProps(item.name)}
+                      helperText={touched[item.name] && errors[item.name]}
+                      error={Boolean(errors[item.name] && touched[item.name])}
+                    />
                 </div>
                 ))}
                 {/* <div className="col-6 mt-3" >

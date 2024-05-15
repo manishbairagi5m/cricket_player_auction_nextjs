@@ -28,7 +28,7 @@ const getData = async () => {
   // const params = { id : id }
   // await getTopMvp(params).then((res) => {
   //   if(res?.status){
-  //     setTopMvp(res.data.data)
+  //     setTopMvp(res.data)
   //   }
   // })
 }

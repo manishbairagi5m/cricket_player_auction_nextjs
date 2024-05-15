@@ -34,6 +34,7 @@
     bottom: -30px;
     left: 20px;
     border: 3px solid white;
+    outline: 2px solid black;
     border-radius: 50%;
 }
 .tournament-card-status{
@@ -41,11 +42,19 @@
     position: absolute;
     bottom: 10px;
     right: 10px;
+    font-size: 14px ;
     border-radius: 15px;
-    background-color: green;
+    background-color: yellow;
     color: white;
     padding: 3px 15px;
 }
+.tournament-card-status[content=ONGOING]{
+    background-color: red;
+}
+.tournament-card-status[content=COMPLETED]{
+    background-color: green;
+}
+
 .tournament-card-ball{
     width: 20px;
     height: 20px;
@@ -122,7 +131,7 @@
     margin: 0 20px;
 }
 .tournament-tabs li{
-    min-width: 120px;
+    min-width: 130px;
     cursor: pointer;
     padding: 8px 0;
     text-align: center;
@@ -143,6 +152,6 @@
   .tournament-current-plate div{
     height: 3px;
     background-color: var(--maincolor);
-    width: 120px;
+    width: 130px;
     border-radius: 10px 10px 0px 0;
   }

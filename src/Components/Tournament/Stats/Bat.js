@@ -29,7 +29,7 @@ const getData = async () => {
   // const params = { id : id }
   // await getTopBatsman(params).then((res) => {
   //   if(res?.status){
-  //     setTopBatsman(res.data.data)
+  //     setTopBatsman(res.data)
   //   }
   // })
 }

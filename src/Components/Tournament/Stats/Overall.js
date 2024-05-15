@@ -27,7 +27,7 @@ const getData = async () => {
   // const params = { id : id }
   // await getOverAllStats(params).then((res) => {
   //   if(res?.status){
-  //     setTopStats(res.data.data)
+  //     setTopStats(res.data)
   //   }
   // })
 }

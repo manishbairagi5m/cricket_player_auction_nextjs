@@ -27,8 +27,8 @@ export default function PointsTable (){
     // await getTeamList(params).then((res) => {
     //   if(res?.status){
     //     let grpdata = []
-    //     for(let i=0;i<res.data.data.length;i++){
-    //       grpdata.push(res.data.data[i].team_name)
+    //     for(let i=0;i<res.data.length;i++){
+    //       grpdata.push(res.data[i].team_name)
     //     }
     //     setGroupsData([{group_name:"group_A",team_name:[...grpdata]}])
     //   }
@@ -39,8 +39,8 @@ export default function PointsTable (){
     // const params = { tournament_id : id}
     // await getGroupWiseTeam(params).then((res) => {
     //   if(res?.status){
-    //     if(res.data.data.length > 0){
-    //       setGroupsData(res.data.data)
+    //     if(res.data.length > 0){
+    //       setGroupsData(res.data)
     //     }else{
     //       if(Object.keys(teamdata).length > 0){
     //         setGroupsData([{group_name:"group_A",team_name:[...Object.keys(teamdata)]}])
@@ -56,8 +56,8 @@ export default function PointsTable (){
     // const params = { tournament_id : id}
     // await getMatchList(params).then((res) => {
     //   if(res?.status){
-    //     setMatchData(res.data.data)
-    //     let resData = res.data.data
+    //     setMatchData(res.data)
+    //     let resData = res.data
     //     let obj = {match:1,win:0,loose:0,tied:0,no_result:0,pts:0,nrr:0}
     //     let data = {}
     //     for(let i=0;i<resData.length;i++){

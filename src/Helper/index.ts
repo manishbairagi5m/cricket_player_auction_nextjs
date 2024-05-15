@@ -3,11 +3,25 @@ import { uTCCurrentDateTime } from "./getUTCDateTime";
 
 export const helper : any = {
   
+    stringCapitalize : (str:string) => {
+      if(str) return str[0].toUpperCase() + str.slice(1).toLowerCase()
+        else return str
+    },
+
     toDateFormat : (date:string) => {
       let temp = new Date(date)
       let newDate = temp.getDate() < 10 ? `0${temp.getDate()}` : temp.getDate()
       let month = temp.getMonth() < 10 ? `0${temp.getMonth()}` : temp.getMonth()
       return `${newDate}-${month}-${temp.getFullYear()}`
+    },
+    dateConverter: (date : any = "") => {
+      date = new Date(date)
+      var hours = date.getHours();
+      var minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+      var am = hours >= 12 ? 'PM' : 'AM';
+      var hour = hours % 12 || 12;
+      var Hour = hour < 10 ? `0${hour}` : hour;
+      return Hour + ':' + minutes + ' ' + am;
     },
 
     calcRemainingTime : (date:string):string => {

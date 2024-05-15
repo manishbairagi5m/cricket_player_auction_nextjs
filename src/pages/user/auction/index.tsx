@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { RiErrorWarningFill } from "react-icons/ri";
 import { MdModeEdit,MdDelete  } from "react-icons/md";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { FaLocationDot } from "react-icons/fa6";
@@ -67,7 +68,7 @@ const StyledTable = styled(Table)(({ theme }) => ({
   },
 }));
 
-export default function AuctionList() {
+export default function TounamentList() {
   const [loader, setLoader] = useState(false);
   const [state, setState] = useState<any>([]);
   const [page, setPage] = useState(1);
@@ -198,7 +199,7 @@ export default function AuctionList() {
           <Grid container spacing={2} sx={{ mb: 2, mt: 1 }}>
             <Grid item lg={3.8} md={3} sm={12} xs={12}>
               <h4 className="h2-chart">
-                Auction
+                Auctions
               </h4>
             </Grid>
 
@@ -260,18 +261,19 @@ export default function AuctionList() {
                 <button
                   style={{ minWidth: "200px" }}
                   className="main-button-blue"
-                  onClick={() => router.push("/user/tournament/create")}
+                  onClick={() => router.push("/user/auction/create")}
                 >
-                  Add Tournament
+                  Create
                 </button>
               </div>
             </Grid>
           </Grid>
 
-       
+
 <Grid container spacing={2} sx={{ mb: 2, mt: 1 }}>
             <Grid item lg={4} md={3} sm={12} xs={12}>
-          <div className="tournament-card">
+          <div className="tournament-card" 
+          onClick={()=> router.push(`/user/auction/detail/sdjff12fsdf4sf5?tab=about`)}>
             <div className="tournament-card-firsthalf">
                 <Image
                     src="/Assets/Images/tournament-banner.jpg"
@@ -290,21 +292,15 @@ export default function AuctionList() {
                 <div className="tournament-card-status">Live</div>
             </div>
             <div className="tournament-card-secondhalf">
-                <p className="text-end">10 over
-                <Image
-                    src="/Assets/Images/tennis.png"
-                    width={50}
-                    height={50}
-                    alt="img"
-                    className="tournament-card-ball"
-                />
-                Turf
+                <p className="text-end">
+                Offline
                 </p>
-                <h4>Indore Premier League</h4>
-                <p className="mb-3 mt-1"> <FaLocationDot className="fs-5" /> Mahesh Turf,Vijay Nagar,Indore</p>
+                <h5>Indore Premier League Auction</h5>
+                <p className="mb-3 mt-1"> <FaLocationDot className="fs-5" /> Gandhi Hall,Vijay Nagar,Indore</p>
                 <div className="tournament-card-data"> <FaCalendarAlt className="fs-5" /> From - 10 May 2023</div>
                 <div className="tournament-card-data"> <FaCalendarAlt className="fs-5" /> To   - 30 May 2023</div>
-                <div className="tournament-card-data"> <FaPeopleGroup className="fs-5" /> Team Registered - 5</div>
+                <div className="tournament-card-data"> <FaPeopleGroup className="fs-5" /> Player Registered - 44
+                <RiErrorWarningFill className="ms-1 text-warning fs-6" /></div>
                 <div className="tournament-card-buttons">
                     <div> <MdModeEdit /> </div>
                     <div className="mb-2"> <MdDelete   className="text-danger" /> </div>
@@ -358,4 +354,4 @@ export default function AuctionList() {
 }
 
 
-AuctionList.auth = { userType: "USER" };
+TounamentList.auth = { userType: "USER" };

@@ -28,7 +28,7 @@ const getData = async () => {
   // const params = { id : id }
   // await getTopFielder(params).then((res) => {
   //   if(res?.status){
-  //     setTopFielder(res.data.data)
+  //     setTopFielder(res.data)
   //   }
   // })
 }

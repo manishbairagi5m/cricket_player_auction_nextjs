@@ -97,7 +97,7 @@
   position: relative;
 }
 .sidebar-box ul li{
-  font-weight: 600;
+  /* font-weight: 600; */
   cursor: pointer;
   padding: 13px 25px;
   display: flex;

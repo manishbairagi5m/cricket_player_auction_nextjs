@@ -21,7 +21,7 @@ export const getProfile = async () => {
 };
 
 export const userLogin = async (data) => {
-  const url = INITIAL_URL + "/super_admin/";
+  const url = INITIAL_URL + "/user/register";
   const response = await _post(url, data);
   return response;
 };
@@ -33,13 +33,13 @@ export const userRegister = async (data) => {
 };
 
 export const verifyOtp = async (data) => {
-  const url = INITIAL_URL + "/bidder/verification_otp";
+  const url = INITIAL_URL + "/user/verify-otp";
   const response = await _post(url, data);
   return response;
 };
 
 export const resendOtp = async (data) => {
-  const url = INITIAL_URL + "/bidder/resend_otp";
+  const url = INITIAL_URL + "/user/resend-otp";
   const response = await _post(url, data);
   return response;
 };

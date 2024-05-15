@@ -1,38 +1,46 @@
 import React, { useState, useEffect } from "react";
 import { SlLocationPin } from "react-icons/sl";
-// import { getMatchList, getFixtureTeamList } from "services/admin/Tournamet";
+import { getMatchList, getFixtureTeamList } from "@/customApi/tournament";
 import { Grid, Button } from "@mui/material";
-// import moment from "moment";
-// import { scoreFunctions } from "../StartMatch/scoring/scoreFunctions";
+import moment from "moment";
+import { scoreFunctions } from "@/Components/Tournament/StartMatch/scoring/scoreFunctions";
 import SimpleCard from "@/Components/StyledComponents/SimpleCard";
+import { useRouter } from "next/router";
 
+interface IMatchesTabProps {
+  state : any;
+  setRunningMatchData : any;
+  setMatchValue : any;
+  setTeamAPlayer : any;
+  setTeamBPlayer : any;
+  setCurMatchListData : any;
+}
 
-
-export default function Matches ({
+export default function Matches({
   state,
   setRunningMatchData,
   setMatchValue,
   setTeamAPlayer,
   setTeamBPlayer,
   setCurMatchListData,
-}) {
-  const [matchData, setMatchData] = useState([]);
-//   const { id } = useParams();
+}: IMatchesTabProps) {
+  const [matchData, setMatchData] = useState<any>([]);
+  const router = useRouter();
 
   const getData = async () => {
-    // const params = { tournament_id: id };
-    // await getMatchList(params).then((res) => {
-    //   if (res?.status) {
-    //     setMatchData(res.data.data);
-    //   }
-    // });
+    const params = { tournament_id: router.query.id };
+    await getMatchList(params).then((res) => {
+      if (res?.status) {
+        setMatchData(res.data);
+      }
+    });
   };
 
-  const getMatchRunning = async (data) => {
+  const getMatchRunning = async (data:any) => {
     await getFixtureTeamList(data._id).then((res) => {
       if (res?.status) {
-        setTeamAPlayer(res.data.data[0].teamA_players[0]);
-        setTeamBPlayer(res.data.data[0].teamB_players[0]);
+        setTeamAPlayer(res.data[0].teamA_players[0]);
+        setTeamBPlayer(res.data[0].teamB_players[0]);
       }
     });
   };
@@ -41,7 +49,7 @@ export default function Matches ({
     getData();
   }, []);
 
-  const getApproxOvers = (overs) => {
+  const getApproxOvers = (overs:any) => {
     return (
       (String(overs).split(".")[1] === "6" &&
         Number(String(overs).split(".")[0]) + 1) ||
@@ -49,8 +57,8 @@ export default function Matches ({
     );
   };
 
-  const getMatchPosition = (curmatch) => {
-    let obj = false;
+  const getMatchPosition = (curmatch:any) => {
+    let obj : any = false;
     if (curmatch?.match) {
       let inning1 =
         (curmatch.match.innings[0].first_bat && curmatch.match.innings[0]) ||
@@ -67,7 +75,7 @@ export default function Matches ({
     return obj;
   };
 
-  const getCurrentMatch = (item) => {
+  const getCurrentMatch = (item:any) => {
     if (item?.match) {
       setRunningMatchData(item.match);
       setMatchValue("matches_score");
@@ -78,9 +86,9 @@ export default function Matches ({
 
   return (
     <Grid container spacing={3}>
-      {matchData &&
+      {(matchData &&
         matchData.length > 0 &&
-        matchData.map((item, index) => {
+        matchData.map((item:any, index:number) => {
           let curmatch = getMatchPosition(item);
           return (
             <Grid item lg={4} md={6} sm={12} xs={12} key={index}>
@@ -122,11 +130,11 @@ export default function Matches ({
                 <div style={{ fontSize: 14 }} className="mt-1">
                   <div className="text-secondary d-flex justify-content-between">
                     <span>
-                      {/* {(item?.match?.match_settings?.date &&
+                      {(item?.match?.match_settings?.date &&
                         moment(item.match.match_settings.date).format(
                           "DD-MMM-YYYY"
                         )) ||
-                        moment(item.date).format("DD-MMM-YYYY")} */}
+                        moment(item.date).format("DD-MMM-YYYY")}
                     </span>
                     <span>
                       {item?.match?.match_settings?.no_of_overs ||
@@ -204,15 +212,15 @@ export default function Matches ({
               </div>
             </Grid>
           );
-        }) ||
-        <Grid item lg={12} md={6} sm={12} xs={12} >
-        <SimpleCard>
-        <div className="w-100 d-flex justify-content-center align-items-center">
-          No Matches Found
-        </div>
-        </SimpleCard></Grid>
-        }
+        })) || (
+        <Grid item lg={12} md={6} sm={12} xs={12}>
+          <SimpleCard>
+            <div className="w-100 d-flex justify-content-center align-items-center">
+              No Matches Found
+            </div>
+          </SimpleCard>
+        </Grid>
+      )}
     </Grid>
   );
-};
-
+}

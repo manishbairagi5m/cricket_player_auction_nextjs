@@ -9,7 +9,7 @@ interface ModalsState {
   productViewModal: {modal:boolean,image:string,magnifier:boolean};
   nextTabModal: string;
   userId: string;
-  email: string;
+  mobile: string;
 }
 
 const initialState: ModalsState = {
@@ -20,7 +20,7 @@ const initialState: ModalsState = {
   changePassModal: false,
   nextTabModal:"login",
   userId: "",
-  email: "",
+  mobile: "",
   productViewModal: {modal:false,image:"",magnifier:false},
 };
 
@@ -52,8 +52,8 @@ export const modalsSlice = createSlice({
     setUserId: (state, action: PayloadAction<string>) => {
       state.userId = action.payload;
     },
-    setEmailId: (state, action: PayloadAction<string>) => {
-      state.email = action.payload;
+    setMobileNumber: (state, action: PayloadAction<string>) => {
+      state.mobile = action.payload;
     },
   },
 });
@@ -61,7 +61,7 @@ export const modalsSlice = createSlice({
 export const {
   setRegisterModal,
   setLoginModal,setProductViewModal,
-  setOtpModal,setEmailId,
+  setOtpModal,setMobileNumber,
   setForgetPassModal,setUserId,
   setChangePassModal,setNextTabModal
 } = modalsSlice.actions;

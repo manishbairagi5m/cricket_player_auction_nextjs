@@ -21,6 +21,7 @@ import "@/styles/mainheader.css";
 import "@/styles/dashboard.css";
 import "@/styles/styles.css";
 import "@/styles/tournament.css";
+import "@/styles/auction.css";
 
 
 export default function App({
@@ -37,64 +38,29 @@ export default function App({
     });
   }, []);
 
-  // const theme = createTheme(
-  //   { 
-  //   palette: {
-  //     primary: {
-  //       main: '#180238',
-  //     },
-  //   },
-  //   components: {
-  //     MuiSelect: {
-  //       styleOverrides: {
-  //         icon: {
-  //           color: '#9276D7',
-  //         },
-  //       },
-  //     },
-  //     MuiInputBase: {
-  //       styleOverrides: {
-  //         input: {
-  //           height: '5px', 
-  //           "&::placeholder": {
-  //             fontSize : "14px",
-  //           },
-  //         },
-  //         root: {
-  //           height: '38px',
-  //         },
-  //       },
-  //     },
-  //     MuiOutlinedInput: {
-  //       styleOverrides: {
-  //         root: {
-  //           outline: '1px solid #bca9b6',
-  //           '.MuiOutlinedInput-notchedOutline': {
-  //             border:'0 !important',
-  //           },
-  //           "&:hover": {
-  //             border:"1px solid #bca9b6",
-  //             '.MuiOutlinedInput-notchedOutline': {
-  //               borderColor: 'white !important',
-  //             },
-  //           },
-  //           "&:focus-within": {
-  //             border: '1px solid #bca9b6', 
-  //             '.MuiOutlinedInput-notchedOutline': {
-  //               borderColor: 'white !important',
-  //             },
-  //           },
-  //         },
-  //       },
-  //     },
-  //   },
-  // }
-  // );
+  const theme = createTheme(
+    { 
+    palette: {
+      primary: {
+        main: '#191966',
+      },
+    },
+    components: {
+      MuiContainer: {
+          styleOverrides: {
+              maxWidthLg: {
+                  maxWidth: '1440px!important',
+              },
+          },
+      },
+  },
+}
+  );
 
   return (
     <Provider store={store}>
     <SessionProvider session={session}>
-      {/* <ThemeProvider theme={}> */}
+      <ThemeProvider theme={theme}>
       {Component.auth ? (
         <Auth userType={Component.auth.userType}>
           <AuthLayout>
@@ -108,7 +74,7 @@ export default function App({
           </Layout>
         </CustomSuspence>
        )}
-      {/* </ThemeProvider> */}
+      </ThemeProvider>
       <CustomToast />
     </SessionProvider>
     </Provider>

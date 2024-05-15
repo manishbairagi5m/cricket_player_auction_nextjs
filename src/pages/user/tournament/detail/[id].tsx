@@ -1,13 +1,16 @@
 import Image from "next/image";
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { useRouter, useSearchParams } from 'next/navigation'
-import {About,Fixtures,Matches,PointTable,StartMatch,Stats,Teams} from "@/Components/Tournament"
+import { About,Fixtures,Matches,PointTable,StartMatch,Stats,Teams } from "@/Components/Tournament"
+import { getSingleTournamentAbout } from "@/customApi/tournament";
+import { useRouter } from "next/router";
 
 
 export default function TournamentDetail () {
   const [currentPlate, setCurrentPlate] = useState(0);
-  const searchParams = useSearchParams()
+  const [state, setState] = useState([]);
+  const [addTeam, setAddTeam] = useState('Team')
+  const [teamId, setTeamId] = useState('')
   const router = useRouter()
 
   let obj = [
@@ -24,15 +27,25 @@ export default function TournamentDetail () {
     setCurrentPlate(i)
     let findTab = obj.find((itm,i)=> item.key===itm.key)
     if(findTab){
-      router.push(`/user/tournament/detail/sdjff12fsdf4sf5?tab=${findTab.key}`)
+      router.push(`/user/tournament/detail/${router.query.id}?tab=${findTab.key}`)
     }
   }
   
   useEffect(() => {
-    let param = searchParams.get('tab')
-    let findIndex = obj.findIndex((item)=> item.key===param)
+    let findIndex = obj.findIndex((item)=> item.key===router.query.tab)
     setCurrentPlate(findIndex)    
   }, [])
+
+
+  const getDetail = async () => {
+    await getSingleTournamentAbout(router.query.id).then((res) => {
+      setState(res?.data);
+    });
+  };
+
+  useEffect(() => {
+    getDetail();
+  }, []);
   
 
 
@@ -70,19 +83,19 @@ export default function TournamentDetail () {
             ))}
             {currentPlate>=0 &&
               <div className="tournament-current-plate" 
-                style={{left:`${currentPlate*120}px`}} >
+                style={{left:`${currentPlate*130}px`}} >
                 <div></div></div>
             }
           </ul>
       </div>
-      <div className="my-4 overflow-auto">
-        {currentPlate===0 && <About state={{organizer_name:'ffdas'}} />}
-        {currentPlate===1 && <Teams />}
-        {currentPlate===2 && <Matches />}
-        {currentPlate===3 && <Fixtures />}
+      <div className="py-4 overflow-auto">
+        {currentPlate===0 && <About state={state} />}
+        {currentPlate===1 && <Teams teamId={teamId} setAddTeam ={setAddTeam} setTeamId={setTeamId} state={state} />}
+        {currentPlate===2 && <Matches state={state} />}
+        {currentPlate===3 && <Fixtures data={state} />}
         {currentPlate===4 && <Stats />}
         {currentPlate===5 && <PointTable />}
-        {currentPlate===6 && <StartMatch />}
+        {currentPlate===6 && <StartMatch state={state} />}
       </div>
     
     </div>

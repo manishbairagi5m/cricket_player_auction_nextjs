@@ -30,7 +30,7 @@ const getData = async () => {
   // const params = { id : id }
   // await getTopBowler(params).then((res) => {
   //   if(res?.status){
-  //     setTopBowler(res.data.data)
+  //     setTopBowler(res.data)
   //   }
   // })
 }

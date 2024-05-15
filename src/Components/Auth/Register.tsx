@@ -1,5 +1,4 @@
 'use client'
-import CustomTextfield from "../StyledComponents/CustomTextfields";
 import { ImCross } from "react-icons/im";
 import { FiEye } from "react-icons/fi";
 import Modal from "react-bootstrap/Modal";
@@ -12,6 +11,7 @@ import { useState } from "react";
 import Spinner from 'react-bootstrap/Spinner';
 import { useDispatch,useSelector } from "react-redux"; 
 import { setLoginModal, setOtpModal, setRegisterModal, setUserId } from "@/lib/slice/modalsSlice";
+import { TextField } from "@mui/material";
 export interface IAppProps {
 }
 
@@ -81,6 +81,7 @@ export default function Register(props: IAppProps) {
     touched,
     setFieldValue,
     handleSubmit,
+    getFieldProps
   } = formik;
 
 
@@ -109,7 +110,7 @@ export default function Register(props: IAppProps) {
                   className="col-12 mb-2 "
                   data-aos={`fade-${index%2===0 ? "left" : "right"}`}
                 >
-                  <CustomTextfield
+                  {/* <CustomTextfield
                     name={item.name}
                     type={item?.type || 'text'}
                     label={item.label}
@@ -119,7 +120,19 @@ export default function Register(props: IAppProps) {
                     helperText={touched[item.name] && errors[item.name]}
                     error={Boolean(errors[item.name] && touched[item.name])}
                     Icon={item.Icon}
-                  />
+                  /> */}
+
+                  <TextField
+                      fullWidth
+                      size="small"
+                      type={item.type}
+                      label={item.label}
+                      variant="outlined"
+                      className="mb-2"
+                      {...getFieldProps(item.name)}
+                      helperText={touched[item.name] && errors[item.name]}
+                      error={Boolean(errors[item.name] && touched[item.name])}
+                    />
                 </div>
                 ))}
                 <div className="col-12 mt-3"
