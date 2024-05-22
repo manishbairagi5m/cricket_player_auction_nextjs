@@ -128,14 +128,14 @@ export default function About({ state }) {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell>Ground Type</TableCell>
+                    <TableCell>City</TableCell>
                     <TableCell>
-                      {ground_type_obj[state?.ground_type || ""]}
+                      {state?.city || ""}
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell>Location</TableCell>
-                    <TableCell>{state?.city || ""}</TableCell>
+                    <TableCell>State</TableCell>
+                    <TableCell>{state?.state || ""}</TableCell>
                   </TableRow>
                 </TableBody>
               </StyledTable>

@@ -7,9 +7,8 @@ import {
   styled,
 } from "@mui/material";
 import { Table } from "react-bootstrap";
-// import commonIcon from '../../../../../Assets/images/favicon.png'
-// import { getTopBatsman } from "services/admin/Tournamet";
-// import { loginImg } from "Assets";
+import { getTopBatsman } from "@/customApi/tournament";
+import { useRouter } from "next/router";
 
 const StyledTable = styled(Table)(({ theme }) => ({
   whiteSpace: "pre",
@@ -23,15 +22,15 @@ const StyledTable = styled(Table)(({ theme }) => ({
 
 const Bat = () => {
 const [topBatsman, setTopBatsman] = useState([])
-// const { id } = useParams()
+const router = useRouter()
 
 const getData = async () => {
-  // const params = { id : id }
-  // await getTopBatsman(params).then((res) => {
-  //   if(res?.status){
-  //     setTopBatsman(res.data)
-  //   }
-  // })
+  const params = { id : router.query.id }
+  await getTopBatsman(params).then((res) => {
+    if(res?.status){
+      setTopBatsman(res.data)
+    }
+  })
 }
 
 useEffect(() => {

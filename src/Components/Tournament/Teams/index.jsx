@@ -1,45 +1,36 @@
 import {
   Avatar,
-  Dialog,
-  DialogActions,
-  DialogTitle,
+  Container,
   InputAdornment,
-  Slide,
   TextField,
 } from "@mui/material";
-//   import { teamlogo } from "Assets";
-import SimpleCard from "@/Components/StyledComponents/SimpleCard";
 import React, { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
-//   import AddTeam from "./AddTeam";
-//   import { getTeamList } from "services/admin/Tournamet";
-import Typography from "@mui/material/Typography";
-import DialogContent from "@mui/material/DialogContent";
-import IconButton from "@mui/material/IconButton";
-import styled from "@emotion/styled";
+  import AddTeam from "@/Components/Tournament/Teams/AddTeam";
+  import MyNetworkTeam from "@/Components/Tournament/Teams/MyNetworkTeam";
 import { GrLocation } from "react-icons/gr";
-//   import EditTeam from "./EditTeam";
+import { useRouter } from "next/router";
+import { getTeamList } from "@/customApi/tournament";
+import CustomModal from "@/Components/Modals/CustomModal"
 
 
 export default function Team({ teamId, setAddTeam, state, setTeamId }) {
-  // const imagePath = process.env.REACT_APP_IMG_URL;
+  const IMAGEURL = process.env.NEXT_PUBLIC_IMAGE_URL;
   const [add, setAdd] = useState(false);
-  const [edit, setEdit] = useState(false);
-  const [teamid, setTeamid] = useState(null);
-  const [fullWidth, setFullWidth] = useState(true);
+  const [networkTeamsModal, setNetworkTeamsModal] = useState(false);
   const [team, setTeam] = useState([]);
   const [search, setSearch] = useState("");
-  // const { id } = useParams();
+  const router = useRouter();
 
   const getDetail = async (search) => {
-    //   let params = {tournament_id:id}
-    //   if(search){
-    //     params = {...params, search}
-    //     setSearch(search)
-    //   }
-    //   await getTeamList(params).then((res) => {
-    //     setTeam(res?.data?.data);
-    //   });
+      let params = {tournament_id: router.query.id}
+      if(search){
+        params = {...params, search}
+        setSearch(search)
+      }
+      await getTeamList(params).then((res) => {
+        setTeam(res?.data);
+      });
   };
 
   useEffect(() => {
@@ -47,9 +38,10 @@ export default function Team({ teamId, setAddTeam, state, setTeamId }) {
   }, []);
 
   return (
-    <div>
-      <SimpleCard>
+    <Container>
         <div className="me-2 d-flex justify-content-end">
+          <button className="main-button-blue me-3" style={{height:'fit-content'}} onClick={()=> setNetworkTeamsModal(true)} >Add team from network</button>
+          <button className="main-button-blue me-3" style={{height:'fit-content'}} >Invite Team Via Link</button>
           <TextField
             fullWidth
             className="w-25 mb-4"
@@ -80,7 +72,7 @@ export default function Team({ teamId, setAddTeam, state, setTeamId }) {
                       className="d-flex justify-content-end"
                       style={{ textDecoration: "underline" }}
                     >
-                      <p
+                      {/* <p
                         onClick={() => {
                           setEdit(true);
                           setTeamId(item.team_id);
@@ -93,7 +85,7 @@ export default function Team({ teamId, setAddTeam, state, setTeamId }) {
                         }}
                       >
                         Edit Team
-                      </p>
+                      </p> */}
                       <p
                         onClick={() => {
                           setAddTeam(`select_palying_XI_`);
@@ -112,20 +104,19 @@ export default function Team({ teamId, setAddTeam, state, setTeamId }) {
 
                     <div className="d-flex">
                       <div>
-                        {/* {(item.team_logo && (
+                        {(item.team_logo && (
                           <Avatar
                             alt=""
-                            src={imagePath + item?.team_logo}
+                            src={IMAGEURL + item?.team_logo}
                             sx={{ width: 60, height: 60, margin: "0 auto" }}
                           />
-                        )) || ( */}
+                        )) || (
                           <Avatar
                             alt=""
                             src="https://png.pngtree.com/png-clipart/20221128/ourlarge/pngtree-cricket-logo-png-image_6485594.png"
                             sx={{ width: 60, height: 60, margin: "0 auto" }}
                           />
-                        {/* )} */}
-                        {/* <img src={item?.team_logo ? imagePath+item?.team_logo : teamlogo} style={{ width: "60px" }} /> */}
+                        )}
                       </div>
                       <div>
                         <h5 className="ms-4 mb-2" style={{ fontSize: "16px" }}>
@@ -182,7 +173,13 @@ export default function Team({ teamId, setAddTeam, state, setTeamId }) {
           )}
         </div>
 
-      </SimpleCard>
-    </div>
+        <CustomModal header="Add Team" onClose={()=> setAdd(false)} open={add} >
+          <AddTeam setAdd={setAdd} state={state} getDetail={getDetail} />
+        </CustomModal>
+        <CustomModal header="Add team from network" onClose={()=> setNetworkTeamsModal(false)} open={networkTeamsModal} >
+          <MyNetworkTeam getDetail={getDetail} setNetworkTeamsModal={setNetworkTeamsModal} team={team}/>
+        </CustomModal>
+
+    </Container>
   );
 }

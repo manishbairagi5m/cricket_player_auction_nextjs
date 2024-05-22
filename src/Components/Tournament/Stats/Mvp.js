@@ -7,8 +7,8 @@ import {
   styled,
 } from "@mui/material";
 import { Table } from "react-bootstrap";
-// import { getTopMvp } from "services/admin/Tournamet";
-// import { loginImg } from "Assets";
+import { getTopMvp } from "@/customApi/tournament";
+import { useRouter } from "next/router";
 
 const StyledTable = styled(Table)(({ theme }) => ({
   whiteSpace: "pre",
@@ -22,15 +22,15 @@ const StyledTable = styled(Table)(({ theme }) => ({
 
 const Mvp = () => {
   const [topMvp, setTopMvp] = useState([])
-  // const { id } = useParams()
+  const router = useRouter()
 
 const getData = async () => {
-  // const params = { id : id }
-  // await getTopMvp(params).then((res) => {
-  //   if(res?.status){
-  //     setTopMvp(res.data)
-  //   }
-  // })
+  const params = { id : router.query.id }
+  await getTopMvp(params).then((res) => {
+    if(res?.status){
+      setTopMvp(res.data)
+    }
+  })
 }
 
 useEffect(() => {

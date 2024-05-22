@@ -1,6 +1,7 @@
 import React, { useRef, useState,useEffect } from "react";
 import { TextField } from "@mui/material";
 import { MdCancel,MdEditSquare } from "react-icons/md";
+import Image from "next/image";
 
 const ImageInput = ({
   width,
@@ -36,7 +37,7 @@ const ImageInput = ({
     fontSize:"35px",
     color:"white",
   };
-  const imagePath = process.env.REACT_APP_IMG_URL;
+  const IMAGEURL = process.env.NEXT_PUBLIC_IMAGE_URL
 
   const checkIsImage = () => {
       let isValid = false
@@ -66,6 +67,10 @@ const ImageInput = ({
   useEffect(() => {
     setState({ [name || "Image"]: value || "" })
   }, [value])
+
+  const imageLoader = (img) => {
+    return img ? typeof Object.values(state)[0] === "object" ? URL.createObjectURL(Object.values(state)[0]) : `${IMAGEURL}${img}` : `/Assets/Images/user.png`;
+  };
   
 
   return (
@@ -103,12 +108,16 @@ const ImageInput = ({
             }} 
               />
           </div>
-          <img
+          <Image
             src={
               (typeof Object.values(state)[0] === "object") &&
               URL.createObjectURL(Object.values(state)[0]) ||
-              (imagePath+value)
+              IMAGEURL+value
             }
+            loader={()=> imageLoader(value)}
+            width={200}
+            height={200}
+            alt="img"
             style={{ objectFit: "contain", width: "100%", height: "100%" }}
             className={imageClassName}
           />

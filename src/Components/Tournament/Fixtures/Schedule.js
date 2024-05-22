@@ -55,7 +55,7 @@ const Schedule = () => {
     };
     await getMatchList(params)
       .then((res) => {
-        setMatchlist(res?.data?.data);
+        setMatchlist(res?.data);
         getScorer()       
       })
       .catch((error) => {

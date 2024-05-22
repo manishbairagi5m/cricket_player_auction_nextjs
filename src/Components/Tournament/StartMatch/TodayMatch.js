@@ -2,7 +2,7 @@ import { Container, Grid } from "@mui/material";
 import SimpleCard from "@/Components/StyledComponents/SimpleCard";
 import React, { useState, useEffect } from "react";
 import { getMatchList, getFixtureTeamList, getMatchData } from "@/customApi/tournament";
-import { Helper } from "@/Helper";
+import { helper } from "@/Helper";
 import {
   team1,
   team2,
@@ -11,6 +11,8 @@ import {
 import { resetScore } from "@/lib/slice/scoreSlice";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
+import Image from "next/image";
+import { Spinner } from "react-bootstrap";
 
 const TodayMatch = ({
   setMatchValue,
@@ -26,7 +28,7 @@ const TodayMatch = ({
   const [updateData, setUpdateData] = useState([]);
   const dispatch = useDispatch();
   const router = useRouter();
-  const imagePath = process.env.REACT_APP_IMG_URL;
+  const IMAGEURL = process.env.NEXT_PUBLIC_IMAGE_URL;
 
   let obj = {
     PRE_LEAGUE: "Pre League",
@@ -151,7 +153,7 @@ const TodayMatch = ({
     } else if (remTime.getUTCHours() < 1 && remTime.getUTCMinutes() <= 30) {
       return "Start";
     } else {
-      return `Today ${Helper.dateConverter(matchdata?.date)}`;
+      return `Today ${helper.dateConverter(matchdata?.date)}`;
     }
   };
 
@@ -166,12 +168,15 @@ const TodayMatch = ({
     };
   }, []);
 
+  const imageLoader = (img, defaultimg) => {
+    return img ? `${IMAGEURL}${img}` : `/Assets/Images/${defaultimg}`;
+  };
+
   return (
     <Container>
-    <SimpleCard>
       {(loader && (
         <div className="w-100 d-flex justify-content-center">
-          Loading...
+          <Spinner />
         </div>
       )) || (
         <Grid container spacing={2} className="mt-1">
@@ -211,51 +216,34 @@ const TodayMatch = ({
                       </div>
                     </div>
                     <div className="d-flex justify-content-between">
-                      <div>{
-                        teamALogo.team_logo ?
-                        <img
-                          src={imagePath + teamALogo?.team_logo}
+                      <div>
+                        <Image
+                          src="https://png.pngtree.com/png-clipart/20221128/ourlarge/pngtree-cricket-logo-png-image_6485594.png"
+                        loader={()=> imageLoader(teamALogo?.team_logo,"https://png.pngtree.com/png-clipart/20221128/ourlarge/pngtree-cricket-logo-png-image_6485594.png")}
+                          width={70}
+                          height={70}
+                          alt="img"
                           style={{
-                            width: 70,
-                            height: 70,
                             borderRadius: "50%",
                             objectFit: "cover",
                           }}
-                        /> :
-                        <img
-                          src='https://png.pngtree.com/png-clipart/20221128/ourlarge/pngtree-cricket-logo-png-image_6485594.png'
-                          style={{
-                            width: 70,
-                            height: 70,
-                            borderRadius: "50%",
-                            objectFit: "cover",
-                          }}
-                        />
-                        }
+                        /> 
                         <br />
                         <p className="mt-2 mb-0 text-dark">{item.teamA_name}</p>
                       </div>
-                      <div>{teamBLogo.team_logo ?
-                        <img
-                          src={imagePath + teamBLogo?.team_logo}
+                      <div>
+                        <Image
+                        src="https://png.pngtree.com/png-clipart/20221128/ourlarge/pngtree-cricket-logo-png-image_6485594.png"
+                        loader={()=> imageLoader(teamBLogo?.team_logo,"https://png.pngtree.com/png-clipart/20221128/ourlarge/pngtree-cricket-logo-png-image_6485594.png")}
+                        width={70}
+                        height={70}
+                        alt="img"
                           style={{
-                            width: 70,
-                            height: 70,
                             borderRadius: "50%",
                             objectFit: "cover",
                           }}
                         />
-                        :
-                        <img
-                          src='https://png.pngtree.com/png-clipart/20221128/ourlarge/pngtree-cricket-logo-png-image_6485594.png'
-                          style={{
-                            width: 70,
-                            height: 70,
-                            borderRadius: "50%",
-                            objectFit: "cover",
-                          }}
-                        />
-                        }
+                      
                         <br />
                         <p className="mt-2 mb-0 text-dark">{item.teamB_name}</p>
                       </div>
@@ -271,7 +259,6 @@ const TodayMatch = ({
             })) || <div className="w-100 text-center">No Match Today</div>}
         </Grid>
       )}
-    </SimpleCard>
     </Container>
   );
 };

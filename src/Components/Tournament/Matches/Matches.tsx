@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { SlLocationPin } from "react-icons/sl";
 import { getMatchList, getFixtureTeamList } from "@/customApi/tournament";
-import { Grid, Button } from "@mui/material";
+import { Grid, Button, Container } from "@mui/material";
 import moment from "moment";
 import { scoreFunctions } from "@/Components/Tournament/StartMatch/scoring/scoreFunctions";
 import SimpleCard from "@/Components/StyledComponents/SimpleCard";
@@ -85,6 +85,7 @@ export default function Matches({
   };
 
   return (
+    <Container>
     <Grid container spacing={3}>
       {(matchData &&
         matchData.length > 0 &&
@@ -222,5 +223,6 @@ export default function Matches({
         </Grid>
       )}
     </Grid>
+    </Container>
   );
 }

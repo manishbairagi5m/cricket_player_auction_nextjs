@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+"use client"
+import React, { useState, useRef } from "react";
 import {
-  styled,
+  styled,Checkbox ,
   Grid,
   Button,
   TextField,
@@ -14,19 +15,18 @@ import {
   FormControlLabel,
   FormControl,
   FormHelperText,
-  Checkbox,
-  OutlinedInput,
-  ListItemText,
 } from "@mui/material";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import ImageInput from "@/Components/StyledComponents/ImageInput";
+import { createTournament } from "@/customApi/tournament"
+import { getPlaceList } from "@/customApi"
 import { Spinner } from "react-bootstrap";
-// import { CKEditor } from "@ckeditor/ckeditor5-react";
-// import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { helper } from "@/Helper"
+import CKEditor from "@/Components/StyledComponents/CKEditor"
 
 const Container = styled("div")(({ theme }) => ({
   margin: "30px",
@@ -44,8 +44,6 @@ const initialValues = {
   city: "",
   state: "",
   country: "",
-  organizer_name: "",
-  organizer_number: "",
   from_date: "",
   to_date: "",
   no_of_teams: "",
@@ -53,8 +51,6 @@ const initialValues = {
   max_players: "",
   min_players: "",
   match_time: "",
-  ground_id: [],
-  ground_type: "",
   tournament_category: "",
   match_type: "",
   match_overs: "",
@@ -70,9 +66,9 @@ const initialValues = {
 
 export default function AddTournament () {
   const [inputLoading, setInputLoading] = useState(false);
+  const [ckData, setCkData] = useState("");
   const [cities, setCities] = useState([]);
   const [inputCity, setInputCity] = useState("");
-  const [turfList, setTurfList] = useState([]);
   const [loader, setLoader] = useState(false);
   const [number, setNumber] = useState(false);
   const [desimal, setDesimal] = useState(false);
@@ -91,19 +87,13 @@ export default function AddTournament () {
       },
     },
   };
+ 
 
   const validationSchema = Yup.object().shape({
     tournament_name: Yup.string()
       .max(50, "Name to long")
       .required("Tournamet name is required"),
     city: Yup.string().required("City is required"),
-    organizer_name: Yup.string()
-      .max(50, "Name To long")
-      .required("Organiser name is required"),
-    organizer_number: Yup.string()
-      .min(10, "Number must be 10 digit")
-      .max(10, "Number must be 10 digit")
-      .required("Organiser number is required"),
     from_date: Yup.string().required("From date is required"),
     to_date: Yup.string().required("To date is required"),
     ball_type: Yup.string().required("Ball type is required"),
@@ -124,10 +114,6 @@ export default function AddTournament () {
       .min(1, "Minimum 1 players"),
     // .max(11,"Maximum 11 players").required("Min. players is required"),
     match_time: Yup.string().required("Match time is required"),
-    ground_id: Yup.array()
-      .min(1, "Select minimun 1 ground")
-      .required("Ground name is required"),
-    ground_type: Yup.string().required("Ground is required"),
     tournament_category: Yup.string().required(
       "Tournament category is required"
     ),
@@ -196,9 +182,7 @@ export default function AddTournament () {
       formdata.append("city", values.city);
       formdata.append("state", values.state);
       formdata.append("country", values.country);
-      formdata.append("organizer_name", values.organizer_name);
       formdata.append("description", values.description);
-      formdata.append("organizer_number", values.organizer_number);
       formdata.append("from_date", values.from_date);
       formdata.append("to_date", values.to_date);
       formdata.append("no_of_teams", Number(values.no_of_teams));
@@ -206,7 +190,6 @@ export default function AddTournament () {
       formdata.append("max_players", Number(values.max_players));
       formdata.append("min_players", Number(values.min_players));
       formdata.append("match_time", values.match_time);
-      formdata.append("ground_type", values.ground_type);
       formdata.append("tournament_category", values.tournament_category);
       formdata.append("match_type", values.match_type);
       formdata.append("match_overs", Number(values.match_overs));
@@ -217,20 +200,19 @@ export default function AddTournament () {
       formdata.append("best_batsman", Number(values.best_batsman));
       formdata.append("best_bowler", Number(values.best_bowler));
       formdata.append("entry_fees", Number(values.entry_fees));
-      formdata.append("ground_id", JSON.stringify(values.ground_id));
 
-    //   await addTournament(formdata).then((res) => {
-    //     setLoader(false);
-    //     if (res?.status === true) {
-    //       // navigate(`/tournament/sponsors/${res.data._id}`)
-    //       // sponsorRef.current.addSponsorsApi(res.data._id)
-    //       toast.success(res?.message);
-    //       router("/tournament");
-    //     } else {
-    //       setLoader(false);
-    //       toast.error(res?.message);
-    //     }
-    //   });
+      await createTournament(formdata).then((res) => {
+        setLoader(false);
+        if (res?.status) {
+          // navigate(`/tournament/sponsors/${res.data._id}`)
+          // sponsorRef.current.addSponsorsApi(res.data._id)
+          toast.success(res?.message);
+          router.push("/user/tournament");
+        } else {
+          setLoader(false);
+          toast.error(res?.message);
+        }
+      });
     },
   });
 
@@ -244,18 +226,6 @@ export default function AddTournament () {
     getFieldProps,
   } = formik;
 
-  const getTurfList = async () => {
-    let params = {
-      city_name: values.city.split(",")[0],
-      spot_type: values.ground_type,
-    };
-    // await getTurfData(params).then((res) => {
-    //   if (res?.status) {
-    //     setTurfList(res?.data?.data);
-    //   }
-    // });
-  };
-
   const handleChange = (e) => {
     setNumber(false);
     if (e.target.value[0] === "0") {
@@ -265,18 +235,16 @@ export default function AddTournament () {
     }
   };
 
-  useEffect(() => {
-    getTurfList();
-  }, [values.city, values.ground_type]);
+
+  console.log(values,'values')
 
   return (
     <Container>
         <h2 className="h2-chart mt-2">Add Tournament</h2>
         <form onSubmit={handleSubmit} className="ms-3 me-3">
           <Grid container spacing={3}>
-            <Grid item lg={6} md={6} sm={12} xs={12} sx={{ mt: 2 }}>
-              {" "}
               {/* tournament logo */}
+            <Grid item lg={6} md={6} sm={12} xs={12} sx={{ mt: 2 }}>
               <ImageInput
                 width="100%"
                 height="200px"
@@ -293,9 +261,8 @@ export default function AddTournament () {
               />
             </Grid>
 
-            <Grid item lg={6} md={6} sm={12} xs={12} sx={{ mt: 2 }}>
-              {" "}
               {/* tournament banner */}
+            <Grid item lg={6} md={6} sm={12} xs={12} sx={{ mt: 2 }}>
               <ImageInput
                 width="100%"
                 height="200px"
@@ -314,9 +281,8 @@ export default function AddTournament () {
               />
             </Grid>
 
-            <Grid item lg={6} md={6} sm={12} xs={12}>
-              {" "}
               {/* tournament name */}
+            <Grid item lg={6} md={6} sm={12} xs={12}>
               <TextField
                 fullWidth
                 name="tournament_name"
@@ -332,16 +298,16 @@ export default function AddTournament () {
               />
             </Grid>
 
-            <Grid item lg={6} md={6} sm={12} xs={12} sx={{ mt: 0 }}>
-              {" "}
               {/* city */}
+            <Grid item lg={6} md={6} sm={12} xs={12} sx={{ mt: 0 }}>
               <Autocomplete
                 disablePortal
                 id="combo-box-demo"
                 options={cities}
                 getOptionLabel={(cities) => cities?.description}
                 onChange={(e, value) => {
-                  let placeDetail = Helper.getPlaceDetail(value);
+                  let placeDetail = helper.getPlaceDetail(value);
+                  console.log(placeDetail,'placeDetail')
                   setFieldValue("city", placeDetail?.city || "");
                   setFieldValue("state", placeDetail?.state || "");
                   setFieldValue("country", placeDetail?.country || "");
@@ -353,20 +319,20 @@ export default function AddTournament () {
                 }
                 fullWidth
                 inputValue={inputCity}
+                onInputChange={async (event, newInputValue) => {
+                  setInputLoading(true);
+                  setInputCity(event?.target?.value);
+                  let arr = await getPlaceList(
+                    event?.target?.value
+                  );
+                  setCities(arr || []);
+                  setInputLoading(false);
+                }}
                 renderInput={(params) => {
                   return (
                     <>
                       <TextField
                         {...params}
-                        onChange={async (event, newInputValue) => {
-                          setInputLoading(true);
-                          setInputCity(event?.target?.value);
-                          let arr = await Helper.getPlaceList(
-                            event?.target?.value
-                          );
-                          setCities(arr || []);
-                          setInputLoading(false);
-                        }}
                         InputProps={{
                           ...params.InputProps,
                           endAdornment: (
@@ -388,39 +354,8 @@ export default function AddTournament () {
               />
             </Grid>
 
-            <Grid item lg={6} md={6} sm={12} xs={12}>
-              {" "}
-              {/* organizer name */}
-              <TextField
-                fullWidth
-                type="text"
-                label="Organiser name"
-                variant="outlined"
-                {...getFieldProps("organizer_name")}
-                helperText={touched.organizer_name && errors.organizer_name}
-                error={Boolean(errors.organizer_name && touched.organizer_name)}
-              />
-            </Grid>
-
-            <Grid item lg={6} md={6} sm={12} xs={12} sx={{ mt: 0 }}>
-              {" "}
-              {/* organizer number */}
-              <TextField
-                fullWidth
-                type="text"
-                label="Contact number"
-                variant="outlined"
-                {...getFieldProps("organizer_number")}
-                helperText={touched.organizer_number && errors.organizer_number}
-                error={Boolean(
-                  errors.organizer_number && touched.organizer_number
-                )}
-              />
-            </Grid>
-
-            <Grid item lg={3} md={6} sm={12} xs={12}>
-              {" "}
               {/* from date */}
+            <Grid item lg={3} md={6} sm={12} xs={12}>
               <InputLabel
                 htmlFor="my-input"
                 className="vendor-input-label mb-3"
@@ -446,9 +381,8 @@ export default function AddTournament () {
               />
             </Grid>
 
-            <Grid item lg={3} md={6} sm={12} xs={12} sx={{ mt: 4.3 }}>
-              {" "}
               {/* to date */}
+            <Grid item lg={3} md={6} sm={12} xs={12} sx={{ mt: 4.3 }}>
               <TextField
                 fullWidth
                 type="date"
@@ -468,9 +402,8 @@ export default function AddTournament () {
               />
             </Grid>
 
-            <Grid item lg={6} md={6} sm={12} xs={12} sx={{ mt: 1 }}>
-              {" "}
               {/* ball type */}
+            <Grid item lg={6} md={6} sm={12} xs={12} sx={{ mt: 1 }}>
               <InputLabel
                 htmlFor="my-input"
                 className="vendor-input-label mb-1"
@@ -525,9 +458,8 @@ export default function AddTournament () {
               </FormControl>
             </Grid>
 
-            <Grid item lg={2} md={6} sm={12} xs={12} sx={{ mt: 0 }}>
-              {" "}
               {/* no of team */}
+            <Grid item lg={2} md={6} sm={12} xs={12} sx={{ mt: 0 }}>
               <TextField
                 fullWidth
                 type="number"
@@ -546,9 +478,8 @@ export default function AddTournament () {
               />
             </Grid>
 
-            <Grid item lg={2} md={6} sm={12} xs={12} sx={{ mt: 0 }}>
-              {" "}
               {/* no of max players */}
+            <Grid item lg={2} md={6} sm={12} xs={12} sx={{ mt: 0 }}>
               <TextField
                 fullWidth
                 type="number"
@@ -567,9 +498,8 @@ export default function AddTournament () {
               />
             </Grid>
 
-            <Grid item lg={2} md={6} sm={12} xs={12} sx={{ mt: 0 }}>
-              {" "}
               {/* no of min players */}
+            <Grid item lg={2} md={6} sm={12} xs={12} sx={{ mt: 0 }}>
               <TextField
                 fullWidth
                 type="number"
@@ -586,9 +516,8 @@ export default function AddTournament () {
               />
             </Grid>
 
-            <Grid item lg={6} md={6} sm={12} xs={12} sx={{ mt: 0 }}>
-              {" "}
               {/* match time */}
+            <Grid item lg={6} md={6} sm={12} xs={12} sx={{ mt: 0 }}>
               <FormControl
                 fullWidth
                 error={Boolean(errors.match_time && touched.match_time)}
@@ -612,86 +541,8 @@ export default function AddTournament () {
               </FormControl>
             </Grid>
 
-            <Grid item lg={6} md={6} sm={12} xs={12}>
-              {" "}
-              {/* pitch type */}
-              <FormControl
-                fullWidth
-                error={Boolean(errors.ground_type && touched.ground_type)}
-              >
-                <InputLabel id="demo-simple-select-label">
-                  Ground Type
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  {...getFieldProps("ground_type")}
-                  label="Ground type"
-                >
-                  <MenuItem
-                    value="TURF"
-                    disabled={values?.ball_type === "LEATHER" ? true : false}
-                  >
-                    Turf
-                  </MenuItem>
-                  <MenuItem value="GROUND">Ground</MenuItem>
-                </Select>
-                <FormHelperText>
-                  {touched.ground_type && errors.ground_type}
-                </FormHelperText>
-              </FormControl>
-            </Grid>
-
-            <Grid item lg={6} md={6} sm={12} xs={12} sx={{ mt: 0 }}>
-              {" "}
-              {/* ground name */}
-              <FormControl
-                fullWidth
-                error={Boolean(errors.ground_id && touched.ground_id)}
-              >
-                <InputLabel id="demo-multiple-checkbox-label">
-                  Ground Name
-                </InputLabel>
-                <Select
-                  labelId="demo-multiple-checkbox-label"
-                  id="demo-multiple-checkbox"
-                  {...getFieldProps("ground_id")}
-                  label="Ground name"
-                  multiple
-                  input={<OutlinedInput label="Ground name" />}
-                  // renderValue={(selected) => selected.join(", ")}
-                  renderValue={(selected) => {
-                    let data = turfList.reduce((acc, cur) => {
-                      if (selected.includes(cur._id)) {
-                        acc.push(cur.spot_name);
-                      }
-                      return acc;
-                    }, []);
-                    return data.join();
-                  }}
-                  MenuProps={MenuProps}
-                >
-                  {turfList.length > 0 &&
-                    turfList.map((item) => {
-                      return (
-                        <MenuItem key={item._id} value={item._id}>
-                          <Checkbox
-                            checked={values.ground_id.indexOf(item._id) > -1}
-                          />
-                          <ListItemText primary={item.spot_name} />
-                        </MenuItem>
-                      );
-                    })}
-                </Select>
-                <FormHelperText>
-                  {touched.ground_id && errors.ground_id}
-                </FormHelperText>
-              </FormControl>
-            </Grid>
-
-            <Grid item lg={3} md={6} sm={12} xs={12}>
-              {" "}
               {/* tournament category */}
+            <Grid item lg={3} md={6} sm={12} xs={12}>
               <FormControl
                 fullWidth
                 error={Boolean(
@@ -924,44 +775,29 @@ export default function AddTournament () {
             </Grid>
 
             <Grid item lg={12} md={6} sm={12} xs={12}>
-              {" "}
-              {/* description */}
-              {/* <CKEditor
+              <div className={`${errors.description && touched.description && "border border-danger"}`}>
+            <CKEditor            
                 name="description"
-                value={values.description}
-                editor={ClassicEditor}
                 data="<p>Decription</p>"
                 onChange={(event, editor) => {
                   const data = editor.getData();
-                  setFieldValue("description", data); // set the description field value in formik state
+                  setFieldValue("description",data);
                 }}
-                onBlur={(event, editor) => {
-                  setTouched({ description: true }); // set the touched state for description field to true
-                }}
-                variant="outlined"
-              /> */}
-                {/* {touched.description && errors.description ? (
-                  <div className="error-message">{errors.description}</div>
-                ) : null} */}
-               <TextField
-                fullWidth
-                type="text"
-                multiline
-                rows={3}
-                label="Description"
-                variant="outlined"
-                value={values.description}
-                name="description"
-                {...getFieldProps("description")}
-                helperText={touched.description && errors.description}
-                error={Boolean(errors.description && touched.description)}
-              />
+            />
+              </div>
+            <span className="text-danger fs-14 ms-3">{touched.description && errors.description}</span>
+            
+                <div className="d-flex align-items-center">
+                  <Checkbox id="auction_perm" />
+                  <label htmlFor="auction_perm">Are you want to add auction for this tournament</label>
+                </div>
             </Grid>
 
             {/* <AddSponsors ref={sponsorRef}/> */}
 
             <Grid item lg={12} md={6} sm={12} xs={12} className="text-center">
-              {" "}
+
+
               {/* submit button */}
               <Button
                 color="primary"
@@ -972,7 +808,7 @@ export default function AddTournament () {
                 style={{ backgroundColor: "#222B42" }}
               >
                 <span>
-                  {(loader && <Spinner />) || "Submit"}{" "}
+                  {(loader && <Spinner size="sm" />) || "Submit"}{" "}
                 </span>
               </Button>
             </Grid>

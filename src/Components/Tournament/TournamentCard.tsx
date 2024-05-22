@@ -11,12 +11,13 @@ import { RiErrorWarningFill } from "react-icons/ri";
 
 export interface ITournamentCardProps {
   data: any;
+  handleClickOpen: any;
 }
 
-export default function TournamentCard({ data }: ITournamentCardProps) {
-  const IMAGEURL = process.env.NEXT_PUBLIC_IMAGE_URL;
+export default function TournamentCard({ data,handleClickOpen }: ITournamentCardProps) {
   const [toolTip, setToolTip] = useState<any>({});
   const router = useRouter();
+  const IMAGEURL = process.env.NEXT_PUBLIC_IMAGE_URL;
 
   const handleToolTip = async (id: string) => {
     let params = { tournament_id: id };
@@ -30,27 +31,23 @@ export default function TournamentCard({ data }: ITournamentCardProps) {
   };
 
   return (
-    <div
-      className="tournament-card"
-      onClick={() =>
-        router.push(`/user/tournament/detail/${data._id}?tab=about`)
-      }
-    >
-      <div className="tournament-card-firsthalf">
+    <div className="tournament-card">
+      <div className="tournament-card-firsthalf"
+        onClick={() => router.push(`/user/tournament/detail/${data._id}?tab=about`)}>
         <Image
           src="/Assets/Images/tournament-banner.jpg"
-        //   loader={() =>
-        //     imageLoader(data.tournament_banner, "tournament-banner.jpg")
-        //   }
+          loader={() =>
+            imageLoader(data.tournament_banner, "tournament-banner.jpg")
+          }
           width={400}
           height={250}
           alt="img"
           className="tournament-card-bgimage"
         />
         <Image
-        //   loader={() =>
-        //     imageLoader(data.tournament_logo, "pexels-photo-674010.jpeg")
-        //   }
+          loader={() =>
+            imageLoader(data.tournament_logo, "pexels-photo-674010.jpeg")
+          }
           src="/Assets/Images/pexels-photo-674010.jpeg"
           width={100}
           height={100}
@@ -62,8 +59,9 @@ export default function TournamentCard({ data }: ITournamentCardProps) {
         </div>
       </div>
       <div className="tournament-card-secondhalf">
+        <div onClick={() => router.push(`/user/tournament/detail/${data._id}?tab=about`)}>
         <p className="text-end">
-          10 over
+          {data?.match_overs && `${data.match_overs} overs`}
           <Image
             src={`/Assets/Images/${data.ball_type.toLowerCase()}.png`}
             width={50}
@@ -77,7 +75,7 @@ export default function TournamentCard({ data }: ITournamentCardProps) {
         <p className="mb-3 mt-1">
           {" "}
           <FaLocationDot className="fs-5" />
-          {data?.city}
+          {data?.city && data?.state && data?.country && `${data.city}, ${data.state}, ${data.country}`}
         </p>
         <div className="tournament-card-data">
           {" "}
@@ -121,14 +119,13 @@ export default function TournamentCard({ data }: ITournamentCardProps) {
             </IconButton>
           </Tooltip>
         </div>
+        </div>
         <div className="tournament-card-buttons">
           <div>
-            {" "}
-            <MdModeEdit />{" "}
+            <MdModeEdit onClick={()=> router.push(`/user/tournament/update/${data._id}`)} />
           </div>
-          <div className="mb-2">
-            {" "}
-            <MdDelete className="text-danger" />{" "}
+          <div className="mb-2" onClick={()=> {handleClickOpen(data._id);}}>
+            <MdDelete className="text-danger" />
           </div>
         </div>
       </div>

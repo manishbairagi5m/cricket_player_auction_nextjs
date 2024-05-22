@@ -14,6 +14,25 @@ export const getUTCWorldTime = async () => {
   });
 };
 
+
+export const getPlaceList = async (val) => {
+  let url = INITIAL_URL + `/globle/google_place_id?search=${val}`;
+  const res = await _get(url);
+  if (res?.status) {
+    return res.data.predictions;
+  }
+}
+export const PlaceId = async (val) => {
+  let location = {};
+  let url = INITIAL_URL + `/globle/google_place?placeId=${val}`;
+  const response = await _get(url);
+  location = {
+    latitude: response?.data?.location?.lat || null,
+    longitude: response?.data?.location?.lng || null,
+  };
+  return location;
+}
+
 export const getProfile = async () => {
   let url = INITIAL_URL + "/bidder/view_profile";
   const response = await _get(url);

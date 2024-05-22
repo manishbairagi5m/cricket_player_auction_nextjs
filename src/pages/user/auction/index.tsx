@@ -140,7 +140,7 @@ export default function TounamentList() {
     // await getTournamentList(params).then((res) => {
     //   setLoader(false);
     //   if(res?.status){
-    //     setState(res?.data.data);
+    //     setState(res?.data);
     //     setPagination({
     //       page: res?.data.pagination.page,
     //       limit: res?.data.pagination.limit,

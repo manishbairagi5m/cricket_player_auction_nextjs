@@ -44,7 +44,7 @@
     right: 10px;
     font-size: 14px ;
     border-radius: 15px;
-    background-color: yellow;
+    background-color: #bdbd10;
     color: white;
     padding: 3px 15px;
 }
@@ -155,3 +155,36 @@
     width: 130px;
     border-radius: 10px 10px 0px 0;
   }
+
+  .add-team {
+    padding: 50px 0;
+    font-size: 20px;
+    border-radius: 10px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    display: flex;
+    justify-content: center;
+    background: white;
+    border: 1px dashed #0c1738;
+    color: #0c1738;
+    align-items: center;
+    /* cursor: pointer; */
+  }
+
+  .team-card {
+    padding: 15px 15px 15px 15px;
+    border-radius: 10px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    background: white;
+    margin-bottom: 40px;
+  }
+
+  .team-cards {
+    background: #ffffff;
+    border: 3px solid #0c1738;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    padding: 15px;
+    margin-bottom: 50px;
+  }
+  

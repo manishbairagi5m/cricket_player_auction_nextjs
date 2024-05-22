@@ -27,19 +27,6 @@ const ScheduleMatches = ({tournamentData,tab,team}) => {
         setValue(newValue);
       };
 
-      const getTournamentGrounds = async () => {
-        const params = { tournament_id :router.query.id}
-        await getTournamentGround(params).then((res)=> {
-          if(res?.status){
-            setGrounds(res.data)
-          }
-        })
-      }
-      
-      useEffect(() => {
-        getTournamentGrounds()
-      }, [])
-
       useEffect(() => {
         let arr = Object.values(tab).filter((item) => item.length > 0)
         setNewTab(arr)
@@ -75,7 +62,7 @@ const ScheduleMatches = ({tournamentData,tab,team}) => {
       </div>
       <Container sx={{ mt: 3 }}>
         <TabPanel value="League"> 
-          <League tournamentData={tournamentData} team={team} grounds={grounds}/>
+          <League tournamentData={tournamentData} team={team} />
         </TabPanel>
 
         <TabPanel value="Pre League">

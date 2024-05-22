@@ -48,7 +48,7 @@ const MatchTab = ({ state }) => {
   const statedata = useSelector((state) => state.match);
   const dispatch = useDispatch();
   const router = useRouter();
-
+// console.log(team,'team')
 
   const setBatBallTeam = (statetoss) => {
     if (
@@ -104,7 +104,7 @@ const MatchTab = ({ state }) => {
     let params = { tournament_id: router.query.id };
     await getTeamList(params).then((res) => {
       if (res?.status) {
-        setTeam(res?.data?.data);
+        setTeam(res?.data);
       }
     });
   };

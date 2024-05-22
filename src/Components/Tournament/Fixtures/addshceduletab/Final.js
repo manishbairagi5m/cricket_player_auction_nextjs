@@ -10,7 +10,7 @@ import { fixTeamMatch, getTeamList,getMatchList,getTournamentGround } from "@/cu
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 
-const Final = ({tournamentData,team,grounds}) => {
+const Final = ({tournamentData,team}) => {
   const router = useRouter();
   const [match, setMatch] = useState([])
 
@@ -35,7 +35,7 @@ const Final = ({tournamentData,team,grounds}) => {
     if(data?.match){
       toast.error("Cannot re-shedule running/completed match")
     }else{
-    if(data.teamA_id && data.teamB_id && data.date && data.ground_id){
+    if(data.teamA_id && data.teamB_id && data.date && data.ground){
     let postData = {...data ,date:data.date+':00', tournament_stages: 'FINAL',tournament_id: router.query.id}
     delete postData.match
     await fixTeamMatch(postData).then((res)=>{
@@ -58,9 +58,9 @@ const Final = ({tournamentData,team,grounds}) => {
       for(let i =0; i< 1 ;i++){
         if(res.data[i]){
           matcharr.push({teamA_id :res.data[i]?.teamA_id,teamB_id:res.data[i]?.teamB_id,date:res.data[i]?.date.slice(0,-3),fixture_id:res.data[i]._id,
-            ground_id:res.data[i]?.ground_id,match:res.data[i].match ? true : false})
+            ground:res.data[i]?.ground,match:res.data[i].match ? true : false})
         }else{
-          matcharr.push({teamA_id :'',teamB_id:'',date:'', ground_id:''})
+          matcharr.push({teamA_id :'',teamB_id:'',date:'', ground:''})
         }
       }
       setMatch(matcharr)
@@ -153,26 +153,15 @@ useEffect(() => {
       </td>
 
       <td className="ps-3 text-center">
-        <FormControl sx={{ m: 1, minWidth: 210 }} size="small">
-          <InputLabel id="demo-select-small-label">
-          Select Ground
-          </InputLabel>
-          <Select
-            labelId="demo-select-small-label"
-            id="demo-select-small"
-            name='ground_id'
-            value={item.ground_id}
-            label="Select Ground"
-            onChange={(e) => handleChange(e,index)}
-          >
-            {grounds.map((item1) => {
-              return (
-                <MenuItem key={item1?.spot_id} value={item1?.spot_id}>{item1?.spot_name}</MenuItem>
-              )
-            })}
-          </Select>
-
-        </FormControl>
+      <TextField
+          sx={{ m: 1, minWidth: 160 }}
+          fullWidth
+          size="small"
+          label="Enter ground address"
+          name="ground"
+          value={item.ground}
+          onChange={(e) => handleChange(e,index)}
+        />
       </td>
 
       <td>

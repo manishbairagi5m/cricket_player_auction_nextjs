@@ -28,6 +28,8 @@ const PlayingXI = ({ setMatchValue,state,team_A_Players,team_B_Players }) => {
         setTeamArr({...teamArr, [type]:[...arr]})
       }
   }
+  
+  console.log(teamArr,'teamArrteamArr')
 
   const handleSubmit = () => {
     // if(teamArr.teamA.length === state.min_players && teamArr.teamA.length === state.min_players ){
@@ -82,8 +84,8 @@ const PlayingXI = ({ setMatchValue,state,team_A_Players,team_B_Players }) => {
   }
   
   const IMAGEURL = process.env.NEXT_PUBLIC_IMAGE_URL;
-  const imageLoader = (img, defaultimg) => {
-    return img ? `${IMAGEURL}${img}` : `${defaultimg}`;
+  const imageLoader = (img,defaultimg) => {
+    return img ? `${IMAGEURL}${img}` : defaultimg ? `${IMAGEURL}${defaultimg}` : "/favicon.png"
   };
 
 
@@ -116,7 +118,7 @@ const PlayingXI = ({ setMatchValue,state,team_A_Players,team_B_Players }) => {
                   
                   <Image
                     src="/favicon.png"
-                    loader={() => imageLoader(item?.img)}
+                    loader={() => imageLoader(item?.img,statedata?.team1?.team_logo)}
                     width={125}
                     height={125}
                     alt="img"
@@ -168,7 +170,7 @@ const PlayingXI = ({ setMatchValue,state,team_A_Players,team_B_Players }) => {
                 <div className="playinf11-img position-relative">
                 <Image
                     src="/favicon.png"
-                    loader={() => imageLoader(item?.img)}
+                    loader={() => imageLoader(item?.img,statedata?.team2?.team_logo)}
                     width={125}
                     height={125}
                     alt="img"

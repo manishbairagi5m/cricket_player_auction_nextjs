@@ -201,7 +201,7 @@ const AddSchedule = ({tournament}) => {
               <div key={index}>
               <Checkbox
                 value={item}
-                checked={Object.values(tab)[index]}
+                checked={Boolean(Object.values(tab)[index])}
                 style={{ color: "black" }}
                 onChange={handleChange}
               />
@@ -277,9 +277,9 @@ const AddSchedule = ({tournament}) => {
         <DialogTitle>Change Group</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            <div className="mt-4 mb-5">
+            <span className="mt-4 mb-5">
               {`Are You Sure You Want to Change Group to ${modal?.data?.target?.value}`}
-              </div>
+              </span>
           </DialogContentText>
         </DialogContent>
         <DialogActions>

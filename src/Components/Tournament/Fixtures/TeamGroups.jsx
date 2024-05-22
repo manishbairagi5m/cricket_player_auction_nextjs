@@ -50,7 +50,7 @@ const TeamGroups = ({ tournamentData, group,groupData,getGroupData,isTournamentS
     let params = { tournament_id: router.query.id };
     await getTeamList(params).then((res) => {
       if (res?.status) {
-        setTeam(res?.data?.data);
+        setTeam(res?.data);
       }
     });
   };

@@ -8,6 +8,7 @@ import {
   TableRow,
 } from "@mui/material";
 import io from "socket.io-client";
+import Image from "next/image";
 
 
 const ENDPOINT = process.env.REACT_APP_SOCKET_URL;
@@ -24,7 +25,7 @@ const MatchLive = (props) => {
     non_striker:{},
     bowler:{},
   });
-  const imagePath = process.env.REACT_APP_IMG_URL;
+  const IMAGEURL = process.env.NEXT_PUBLIC_IMAGE_URL;
 
   const color = {
     0: { backgroundColor: "#EDEDED", color: "black" },
@@ -187,18 +188,24 @@ const getApproxOvers = (overs) => {
   return (String(overs).split(".")[1] === "6" && Number(String(overs).split(".")[0])+1 || overs)
 }
 
+const imageLoader = (img) => {
+  return img ? `${IMAGEURL}${img}` : `/Assets/Images/indiaflag.jpg`;
+};
+
   return (
     <Grid container spacing={3}>
       <Grid item lg={5} md={6} sm={12} xs={12}>
         <div className="my-card p-3">
           <div className="d-flex justify-content-between">
             <div>
-              <img
-                src={imagePath+teamLogo?.team_logo}
+              <Image
+                src="/Assets/Images/indiaflag.jpg"
+                loader={()=> imageLoader(teamLogo?.team_logo)}
+                width={30}
+                height={30}
+                alt="img"
                 className="me-2 rounded-circle"
                 style={{
-                  width: 30,
-                  height: 30,
                   objectFit: "cover",
                 }}
               />

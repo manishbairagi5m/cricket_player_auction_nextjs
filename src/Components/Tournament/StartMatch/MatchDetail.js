@@ -1,29 +1,18 @@
 import React, { useState, useEffect } from "react";
 import {
-  FormControl,
   Grid,
-  MenuItem,
-  Select,
   styled,
   TextField,
   Button,
+  Container,
 } from "@mui/material";
 import SimpleCard from "@/Components/StyledComponents/SimpleCard";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { getTournamentGround } from "@/customApi/tournament";
 import { useDispatch,useSelector } from "react-redux";
 import {  match_settings } from '@/lib/slice/matchSlice';
 import { useRouter } from "next/router";
-
-const Container = styled("div")(({ theme }) => ({
-  margin: "30px",
-  [theme.breakpoints.down("sm")]: { margin: "16px" },
-  "& .breadcrumb": {
-    marginBottom: "30px",
-    [theme.breakpoints.down("sm")]: { marginBottom: "16px" },
-  },
-}));
+import Image from "next/image";
 
 const initialValues = {
   over_per_bowler: "",
@@ -32,11 +21,10 @@ const initialValues = {
 };
 
 const MatchDetail = ({ setMatchValue,matchData, state,setStartMatchData, startMatchData }) => {
-  const [grounds,setGrounds] = useState([])
   const router = useRouter()
   const statedata = useSelector(state => state.match)
   const dispatch = useDispatch()
-  const imagePath = process.env.REACT_APP_IMG_URL;
+  const IMAGEURL = process.env.NEXT_PUBLIC_IMAGE_URL;
   // let teamALogo = team.filter((item1) => item1.team_id === matchData.teamA_id)
   // let teamBLogo = team.filter((item1) => item1.team_id === matchData.teamB_id)
 
@@ -74,56 +62,62 @@ const MatchDetail = ({ setMatchValue,matchData, state,setStartMatchData, startMa
     getFieldProps,
   } = formik;
 
-  const getTournamentGrounds = async () => {
-    const params = { tournament_id :router.query.id}
-    await getTournamentGround(params).then((res)=> {
-      if(res?.status){
-        setGrounds(res.data)
-      }
-    })
-  }
+
 
   useEffect(() => {
-    getTournamentGrounds()
     setFieldValue('match_overs',statedata.match_settings.no_of_overs>0 ? statedata.match_settings.no_of_overs :  state?.match_overs || "")
     setFieldValue('power_play', statedata?.match_settings.power_play || "")
     setFieldValue('over_per_bowler', statedata?.match_settings.over_per_bowler || "")
   }, [])
-  
+
+  const imageLoader = (img, defaultimg) => {
+    return img ? `${IMAGEURL}${img}` : `${defaultimg}`;
+  };
+
   return (
     <Container>
-      {grounds && grounds.length > 0 && 
     <SimpleCard>
       <div
         className="d-flex justify-content-around align-items-center text-center mb-3"
         style={{ width: "28%" }}
       >
         <div>
-          <img
-            src={imagePath + statedata.team1.team_logo}
-            style={{
-              width: 100,
-              height: 100,
-              borderRadius: "50%",
-              objectFit: "cover",
-            }}
-          />
+        <Image
+            src="https://png.pngtree.com/png-clipart/20221128/ourlarge/pngtree-cricket-logo-png-image_6485594.png"
+            loader={()=> imageLoader(statedata.team1.team_logo,"https://png.pngtree.com/png-clipart/20221128/ourlarge/pngtree-cricket-logo-png-image_6485594.png")}
+            width={100}
+            height={100}
+            alt="img"
+              style={{
+                borderRadius: "50%",
+                objectFit: "cover",
+              }}
+            />
+
           <br />
           <p>{matchData.teamA_name}</p>
         </div>
         <div>
-          <img src={vs} />
+          <Image 
+            src={"/Assets/Images/vs.png"}
+            width={100}
+            height={100}
+            alt="img"
+          />
+
         </div>
         <div>
-          <img
-             src={imagePath + statedata.team2.team_logo}
-            style={{
-              width: 100,
-              height: 100,
-              borderRadius: "50%",
-              objectFit: "cover",
-            }}
-          />
+        <Image
+            src="https://png.pngtree.com/png-clipart/20221128/ourlarge/pngtree-cricket-logo-png-image_6485594.png"
+            loader={()=> imageLoader(statedata.team2.team_logo,"https://png.pngtree.com/png-clipart/20221128/ourlarge/pngtree-cricket-logo-png-image_6485594.png")}
+            width={100}
+            height={100}
+            alt="img"
+              style={{
+                borderRadius: "50%",
+                objectFit: "cover",
+              }}
+            />
           <br />
           <p>{matchData.teamB_name}</p>
         </div>
@@ -162,25 +156,14 @@ const MatchDetail = ({ setMatchValue,matchData, state,setStartMatchData, startMa
 
           <Grid item lg={6} md={6} sm={12} xs={12}>
             <h6>Ground</h6>
-            <FormControl
+            <TextField
               fullWidth
-              // error={errors.ground_id && touched.ground_id}
-            >
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={matchData.ground_id}
-              >
-                {grounds && grounds.map((item) => {
-                  return (
-                    <MenuItem key={item?.spot_id} value={item?.spot_id}>{item?.spot_name}</MenuItem>
-                  )
-                })}
-              </Select>
-              {/* <FormHelperText>
-                  {touched.ground_id && errors.ground_id}
-                </FormHelperText> */}
-            </FormControl>
+              type="text"
+              variant="outlined"
+              name="ground"
+              placeholder="Enter Ground Address"
+              value={matchData.ground}
+            />
           </Grid>
 
           <Grid item lg={6} md={6} sm={12} xs={12}>
@@ -244,7 +227,6 @@ const MatchDetail = ({ setMatchValue,matchData, state,setStartMatchData, startMa
         </form>
       </div>
     </SimpleCard>
-      }
     </Container>
   );
 };

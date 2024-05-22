@@ -13,6 +13,7 @@ import MatchScorecard from "@/Components/Tournament/StartMatch/scoring/MatchScor
 import { getTeamList } from "@/customApi/tournament";
 import { scoreFunctions } from "@/Components/Tournament/StartMatch/scoring/scoreFunctions";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 const AContainer = styled(Card)(() => ({
   height: "100%",
@@ -27,9 +28,7 @@ const MatchScoring = ({runningMatchData,team_A_Players,team_B_Players,curMatchLi
     team1: { batsman: [], bowler: [] },
     team2: { batsman: [], bowler: [] },
   });
-  
-  const imagePath = process.env.REACT_APP_IMG_URL;
-
+  const IMAGEURL = process.env.NEXT_PUBLIC_IMAGE_URL;
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -66,7 +65,7 @@ const MatchScoring = ({runningMatchData,team_A_Players,team_B_Players,curMatchLi
     let params = { tournament_id: router.query.id };
     await getTeamList(params).then((res) => {
       if (res?.status) {
-        setTeam(res?.data?.data);
+        setTeam(res?.data);
         getBothTeamDetailedData(runningMatchData)
       }
     });
@@ -76,52 +75,40 @@ const MatchScoring = ({runningMatchData,team_A_Players,team_B_Players,curMatchLi
     getDetail();
   }, []);
 
+  const imageLoader = (img) => {
+    return img ? `${IMAGEURL}${img}` : `https://png.pngtree.com/png-clipart/20221128/ourlarge/pngtree-cricket-logo-png-image_6485594.png`;
+  };
+
 
   return (
     <AContainer>
       <Grid container spacing={2}>
         <Grid item lg={12} md={6} sm={12} xs={12} className="d-flex">
-        {curMatchListData.teamA_logo ?
-          <img
-            src={imagePath + curMatchListData.teamA_logo}
-            style={{
-              width: 50,
-              height: 50,
+          <Image
+          loader={()=> imageLoader(curMatchListData.teamA_logo)}
+           src='https://png.pngtree.com/png-clipart/20221128/ourlarge/pngtree-cricket-logo-png-image_6485594.png'
+           width={50}
+           height={50}
+           alt="img"
+            style={{ 
               borderRadius: "50%",
               objectFit: "cover",
             }}
-          />:
-           <img
-            src='https://png.pngtree.com/png-clipart/20221128/ourlarge/pngtree-cricket-logo-png-image_6485594.png'
-            style={{
-              width: 50,
-              height: 50,
-              borderRadius: "50%",
-              objectFit: "cover",
-            }}
-          /> }
+          />
           <div className="h-100 d-flex align-items-center ms-3 me-3">
             {curMatchListData.teamA_name} Vs {curMatchListData.teamB_name}
           </div>
-          {curMatchListData.teamB_logo ?
-            <img
-            src={imagePath + curMatchListData.teamB_logo}
-            style={{
-              width: 50,
-              height: 50,
+          <Image
+          loader={()=> imageLoader(curMatchListData.teamB_logo)}
+           src='https://png.pngtree.com/png-clipart/20221128/ourlarge/pngtree-cricket-logo-png-image_6485594.png'
+           width={50}
+           height={50}
+           alt="img"
+            style={{ 
               borderRadius: "50%",
               objectFit: "cover",
             }}
-          />:
-          <img
-           src='https://png.pngtree.com/png-clipart/20221128/ourlarge/pngtree-cricket-logo-png-image_6485594.png'
-           style={{
-             width: 50,
-             height: 50,
-             borderRadius: "50%",
-             objectFit: "cover",
-           }}
-         /> }
+          />
         </Grid>
         <TabContext value={value} className="w-100">
           <Grid item lg={6} md={6} sm={12} xs={12}>

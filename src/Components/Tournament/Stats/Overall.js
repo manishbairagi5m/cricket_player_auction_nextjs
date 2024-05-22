@@ -7,7 +7,8 @@ import {
   styled,
 } from "@mui/material";
 import { Table } from "react-bootstrap";
-// import { getOverAllStats } from "services/admin/Tournamet";
+import { getOverAllStats } from "@/customApi/tournament";
+import { useRouter } from "next/router";
 
 const StyledTable = styled(Table)(({ theme }) => ({
   whiteSpace: "pre",
@@ -21,15 +22,15 @@ const StyledTable = styled(Table)(({ theme }) => ({
 
 const Overall = () => {
   const [topStats, setTopStats] = useState([])
-  // const { id } = useParams()
+  const router = useRouter()
 
 const getData = async () => {
-  // const params = { id : id }
-  // await getOverAllStats(params).then((res) => {
-  //   if(res?.status){
-  //     setTopStats(res.data)
-  //   }
-  // })
+  const params = { id : router.query.id }
+  await getOverAllStats(params).then((res) => {
+    if(res?.status){
+      setTopStats(res.data)
+    }
+  })
 }
 
 useEffect(() => {
