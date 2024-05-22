@@ -1,0 +1,183 @@
+
+
+
+@media only screen and (min-width: 10px) and (max-width: 600px) {
+    .auction-player-card-ls-right h6{
+        font-size: 16px !important;
+    }
+    .auction-player-card-ls-right table tr td{
+        font-size: 16px !important;
+    }
+
+    .auction-player-card-ls{
+        flex-direction: column;
+        align-items: center;
+        padding-bottom: 10px;
+    }
+    .auction-player-card-ls h6{
+        text-align: center;
+    }
+}
+@media only screen and (min-width: 601px) and (max-width: 900px) {
+    .auction-player-card-ls-right h6{
+        font-size: 20px !important;
+    }
+    .auction-player-card-ls-right table tr td{
+        font-size: 20px !important;
+    }
+}
+
+/* ==================================================== */
+/* auction player card */
+/* ==================================================== */
+
+.auction-player-card-ls{
+    width: 100%;
+    /* height: 200px; */
+    border-radius: 5px;
+    background-color: #F7FAFF;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    position: relative;
+}
+
+.auction-player-card-ls-status{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: white;
+    font-size: 14px;
+    padding: 1px 5px;
+    border-radius: 5px;
+}
+
+.auction-player-card-ls-status[content='SOLD']{
+    background-color: #0579BC;
+}
+.auction-player-card-ls-status[content='UNSOLD']{
+    background-color: red;
+    letter-spacing: 0px;
+}
+
+.auction-player-card-ls-status[content='PENDING']{
+    background-color: rgb(207, 207, 17);
+    letter-spacing: 0px;
+}
+
+.auction-player-card-ls img{
+    margin: 20px 10px 0 0px;
+    width: calc(40% - 10px);
+    height: calc(100% - 20px);
+}
+
+.auction-player-card-ls-right{
+    margin-top: 30px;
+    width: fit-content;
+    /* margin-left: 20px; */
+}
+
+
+.auction-player-card-ls-right h6{
+    margin-top: 5px;
+    font-weight: 600;
+    font-size: 1.2vw;
+}
+
+.auction-player-card-ls-right table{
+    margin-top: 5px;
+}
+
+.auction-player-card-ls-right table tr{
+    border-bottom: 1px dashed #B1B5C3;
+}
+
+.auction-player-card-ls-right table tr td{
+    padding: 5px;
+    font-size: 0.8vw;
+}
+
+.auction-player-card-ls-right table tr td:nth-child(1){
+    padding-right: 10px;
+    font-weight: 600;
+    color: #5B5B98;
+}
+.auction-player-card-ls-right table tr td:nth-child(2){
+    color: #A9A9C8;
+}
+
+/* ==================================================== */
+/* auction player card */
+/* ==================================================== */
+
+
+
+/* ==================================================== */
+/* auction team card */
+/* ==================================================== */
+
+.auction-team{
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 5px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 15px;
+    font-size: 14px;
+    position: relative;
+}
+
+.auction-team h6{
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.auction-team div{
+    font-weight: 600;
+}
+
+.auction-team p{
+    font-weight: 400;
+    font-size: 12px;
+    color: rgb(77, 75, 75);
+    text-align: center;
+    padding-bottom: 5px;
+}
+
+.auction-team-bottom{
+    text-align: center;
+    display: flex;
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+}
+.auction-team-bottom > div{
+    width: 50%;
+    border-top: 1px solid lightgray;
+    padding: 5px 0;
+}
+.auction-team-bottom > div:nth-child(1){
+    border-right: 1px solid lightgray;
+}
+
+/* ==================================================== */
+/* auction team card */
+/* ==================================================== */
+
+
+.bidding-spinner{
+    width: 800px;
+    height: 800px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.bidding-spinner-center{
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background-color: var(--maincolor);
+
+}

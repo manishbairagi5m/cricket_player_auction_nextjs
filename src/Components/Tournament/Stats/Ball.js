@@ -7,10 +7,8 @@ import {
   styled,
 } from "@mui/material";
 import { Table } from "react-bootstrap";
-// import commonIcon from '../../../../../Assets/images/favicon.png'
-// import { getTopBowler } from "services/admin/Tournamet";
-// import { useParams } from "react-router-dom";
-// import { loginImg } from "Assets";
+import { useRouter } from "next/router";
+import { getTopBowler } from "@/customApi/tournament";
 
 const StyledTable = styled(Table)(({ theme }) => ({
   whiteSpace: "pre",
@@ -24,15 +22,15 @@ const StyledTable = styled(Table)(({ theme }) => ({
 
 export const Ball = () => {
   const [topBowler, setTopBowler] = useState([])
-// const { id } = useParams()
+const router = useRouter()
 
 const getData = async () => {
-  // const params = { id : id }
-  // await getTopBowler(params).then((res) => {
-  //   if(res?.status){
-  //     setTopBowler(res.data.data)
-  //   }
-  // })
+  const params = { id : router.query.id }
+  await getTopBowler(params).then((res) => {
+    if(res?.status){
+      setTopBowler(res.data)
+    }
+  })
 }
 
 const getApproxOvers = (overs) => {

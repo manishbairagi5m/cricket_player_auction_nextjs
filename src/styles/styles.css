@@ -57,7 +57,7 @@ p,
 span,
 div,
 button {
-  /* font-family: "Roboto"; */
+  font-family: "Roboto";
   /* font-weight: 500; */
   letter-spacing: 1.1px;
 }
@@ -128,7 +128,14 @@ body{
 }
 
 
-
+.otp-input{
+  width: 50px !important;
+  height: 50px;
+  background-color: transparent;
+  border: 1px solid var(--secondarycolor);
+  border-radius: 10px;
+  margin: 0 5px;
+}
 
 
 
@@ -352,3 +359,16 @@ input[type=number] {
 /* text with underline animation css */
 /* ==================================================== */
 
+
+
+/* ==================================================== */
+/* players card portrait */
+/* ==================================================== */
+
+.player-portait{
+
+}
+
+/* ==================================================== */
+/* text with underline animation css */
+/* ==================================================== */

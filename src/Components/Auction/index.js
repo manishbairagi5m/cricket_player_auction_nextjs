@@ -1,0 +1,6 @@
+export {default as About} from "@/Components/Auction/About"
+export {default as BoardMembers} from "@/Components/Auction/BoardMembers"
+export {default as Franchise} from "@/Components/Auction/Franchise"
+export {default as Players} from "@/Components/Auction/Players"
+export {default as StartAuction} from "@/Components/Auction/StartAuction"
+export {default as Teams} from "@/Components/Auction/Teams"

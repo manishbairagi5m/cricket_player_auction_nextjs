@@ -27,10 +27,10 @@ export default function MainSidebar({ minimizeSidebar,setMinimizeSidebar,sideBar
 
   let menu = [
     {navigate:"/user",label:"Dashboard", icon:RxDashboard},
-    {navigate:"/user",label:"My Matches", icon:TbCricket},
-    {navigate:"/user",label:"My Team", icon:GiLion},
-    {navigate:"/user",label:"Players", icon:FaPeopleGroup},
-    {navigate:"/user/tournament",label:"My Tournament", icon:GiLaurelsTrophy},
+    {navigate:"/user/my-matches",label:"My Matches", icon:TbCricket},
+    {navigate:"/user/my-team",label:"My Teams", icon:GiLion},
+    {navigate:"/user/players",label:"Players", icon:FaPeopleGroup},
+    {navigate:"/user/tournament",label:"Tournaments", icon:GiLaurelsTrophy},
     {navigate:"/user/auction",label:"Auction", icon:RiAuctionLine},
     {navigate:"/user",label:"Sponsors", icon:FaRegHandshake},
     {navigate:"/user",label:"Franchise", icon:FaBuildingShield},

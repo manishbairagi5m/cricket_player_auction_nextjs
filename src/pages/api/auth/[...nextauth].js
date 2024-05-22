@@ -9,29 +9,11 @@ export default NextAuth({
   },
   callbacks: {
     async jwt({ token, user }) {
-      if (user?._id) {
-        token._id = user._id;
-      }
-      if (user?.userType) {
-        token.userType = user.userType;
-      }
-      if (user?.accessToken) {
-        token.accessToken = user.accessToken;
-      }
-
+      token = {...token , ...user}
       return token;
     },
     async session({ session, token }) {
-      if (token?._id) {
-        session.user._id = token._id;
-      }
-      if (token?.userType) {
-        session.user.userType = token.userType;
-      }
-      if (token?.accessToken) {
-        session.accessToken = token.accessToken;
-      }
-
+      session.user = {...token};
       return session;
     },
   },

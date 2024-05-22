@@ -10,7 +10,7 @@ export const _getToken = async () => {
     try {
         const session = await getSession();
         if (session) {
-          return session.accessToken;
+          return session.user.token;
         } else {
           return "";
         }

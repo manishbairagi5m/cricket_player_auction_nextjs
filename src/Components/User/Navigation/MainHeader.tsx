@@ -2,9 +2,10 @@
 import Dropdown from "react-bootstrap/Dropdown";
 import Image from "next/image";
 import { IoIosMenu } from "react-icons/io";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { FaAngleDown, FaUser } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
+import { helper } from "@/Helper";
 
 export interface IAppProps {
   minimizeSidebar: Boolean;
@@ -25,6 +26,7 @@ export default function MainHeader({
   sideBarBottonRef,
 }: IAppProps) {
   const router = useRouter();
+  const { data : session } : any = useSession()
 
   const handleLogOut = () => {
     signOut({ redirect: false, callbackUrl: "/" });
@@ -55,8 +57,8 @@ export default function MainHeader({
                   className="rounded-circle"
                 />
                 <p className="ms-2 text-start">
-                  <span className="fs-14 text-secondary lh-1">User</span> <br />{" "}
-                  Deepak
+                  <span className="fs-14 text-secondary lh-1">{session?.user?.userType && helper.stringCapitalize(session.user.userType) || ""}</span> <br />{" "}
+                  {session?.user && session?.user?.name || ""}
                 </p>
                 <FaAngleDown className="ms-1 mb-1" />
               </div>

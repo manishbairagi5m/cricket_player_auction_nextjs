@@ -1,5 +1,6 @@
 import * as Yup from "yup";
 
+const MAX_FILE_SIZE = 1024000; //1000KB
 
 export const validationHelper : any = {
     commonText : Yup.string().max(50,"Maximum 50 letters").required("Required"),
@@ -12,7 +13,13 @@ export const validationHelper : any = {
     .matches(/[A-Z]/, 'Must contain at least one uppercase letter')
     .matches(/[0-9]/, 'Must contain at least one number')
     .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Must contain at least one special character'),
-
+    commonImage: Yup.mixed()
+    .required("Required")
+    .test(
+      "is-valid-size",
+      "Max allowed size is 1MB",
+      (value:any) => value && value.size <= MAX_FILE_SIZE
+    ),
 
 
     // functioned validation with params

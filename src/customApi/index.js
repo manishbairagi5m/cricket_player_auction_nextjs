@@ -14,6 +14,25 @@ export const getUTCWorldTime = async () => {
   });
 };
 
+
+export const getPlaceList = async (val) => {
+  let url = INITIAL_URL + `/globle/google_place_id?search=${val}`;
+  const res = await _get(url);
+  if (res?.status) {
+    return res.data.predictions;
+  }
+}
+export const PlaceId = async (val) => {
+  let location = {};
+  let url = INITIAL_URL + `/globle/google_place?placeId=${val}`;
+  const response = await _get(url);
+  location = {
+    latitude: response?.data?.location?.lat || null,
+    longitude: response?.data?.location?.lng || null,
+  };
+  return location;
+}
+
 export const getProfile = async () => {
   let url = INITIAL_URL + "/bidder/view_profile";
   const response = await _get(url);
@@ -21,7 +40,7 @@ export const getProfile = async () => {
 };
 
 export const userLogin = async (data) => {
-  const url = INITIAL_URL + "/super_admin/";
+  const url = INITIAL_URL + "/user/register";
   const response = await _post(url, data);
   return response;
 };
@@ -33,13 +52,13 @@ export const userRegister = async (data) => {
 };
 
 export const verifyOtp = async (data) => {
-  const url = INITIAL_URL + "/bidder/verification_otp";
+  const url = INITIAL_URL + "/user/verify-otp";
   const response = await _post(url, data);
   return response;
 };
 
 export const resendOtp = async (data) => {
-  const url = INITIAL_URL + "/bidder/resend_otp";
+  const url = INITIAL_URL + "/user/resend-otp";
   const response = await _post(url, data);
   return response;
 };

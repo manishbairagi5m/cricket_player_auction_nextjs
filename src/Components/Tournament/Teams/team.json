@@ -1,0 +1,287 @@
+[
+    {
+        "team_name": "India",
+        "team_logo": "",
+        "city": "Indore,Madhya Pradesh, India",
+        "captain_name": "Rohit Sharma",
+        "country_code": "91",
+        "players": [
+            {
+                "name" : "Rohit Sharma",
+                "phone_number" : "4566541230"
+            },
+            {
+                "name" : "Yashasvi Jaiswal",
+                "phone_number" : "4566541231"
+            },
+            {
+                "name" : "Virat Kohli",
+                "phone_number" : "4566541232"
+            },
+            {
+                "name" : "Suryakumar Yadav",
+                "phone_number" : "4566541233"
+            },
+            {
+                "name" : "Rishabh Pant",
+                "phone_number" : "4566541234"
+            },
+            {
+                "name" : "Hardik Pandya",
+                "phone_number" : "4566541235"
+            },
+            {
+                "name" : "Ravindra Jadeja",
+                "phone_number" : "4566541236"
+            },
+            {
+                "name" : "Axar Patel",
+                "phone_number" : "4566541237"
+            },
+            {
+                "name" : "Kuldeep Yadav",
+                "phone_number" : "4566541238"
+            },
+            {
+                "name" : "Jasprit Bumrah",
+                "phone_number" : "4566541239"
+            },
+            {
+                "name" : "Mohammad Siraj",
+                "phone_number" : "4566541240"
+            },
+            {
+                "name" : "Arshdeep Singh",
+                "phone_number" : "4566541241"
+            }
+        ]
+    },
+    {
+        "team_name": "England",
+        "team_logo": "",
+        "city": "Indore,Madhya Pradesh, India",
+        "captain_name": "Jos Buttler",
+        "country_code": "91",
+        "players": [
+            {
+                "name" : "Jos Buttler",
+                "phone_number" : "7534561210"
+            },
+            {
+                "name" : "Philp Salt",
+                "phone_number" : "7534561211"
+            },
+            {
+                "name" : "Jonny Bairstow",
+                "phone_number" : "7534561212"
+            },
+            {
+                "name" : "Will Jacks",
+                "phone_number" : "7534561213"
+            },
+            {
+                "name" : "Moeen Ali",
+                "phone_number" : "7534561214"
+            },
+            {
+                "name" : "Liam Livingstone",
+                "phone_number" : "7534561215"
+            },
+            {
+                "name" : "Sam Curran",
+                "phone_number" : "7534561216"
+            },
+            {
+                "name" : "Harry Brook",
+                "phone_number" : "7534561217"
+            },
+            {
+                "name" : "Jofra Archer",
+                "phone_number" : "7534561218"
+            },
+            {
+                "name" : "Reece Tolpey",
+                "phone_number" : "7534561219"
+            },
+            {
+                "name" : "Mark Wood",
+                "phone_number" : "7534561220"
+            },
+            {
+                "name" : "Adil Rashid",
+                "phone_number" : "7534561221"
+            }
+        ]
+    },
+    {
+        "team_name": "Australia",
+        "team_logo": "",
+        "city": "Indore,Madhya Pradesh, India",
+        "captain_name": "Mitchell Marsh",
+        "country_code": "91",
+        "players": [
+            {
+                "name" : "David Warner",
+                "phone_number" : "8412348860"
+            },
+            {
+                "name" : "Travis Head",
+                "phone_number" : "8412348861"
+            },
+            {
+                "name" : "Mitchell Marsh",
+                "phone_number" : "8412348862"
+            },
+            {
+                "name" : "Glen Maxwell",
+                "phone_number" : "8412348863"
+            },
+            {
+                "name" : "Marcus Stoinis",
+                "phone_number" : "8412348864"
+            },
+            {
+                "name" : "Tim David",
+                "phone_number" : "8412348865"
+            },
+            {
+                "name" : "Cameron Green",
+                "phone_number" : "8412348866"
+            },
+            {
+                "name" : "Josh Inglis",
+                "phone_number" : "8412348867"
+            },
+            {
+                "name" : "Pat Cummins",
+                "phone_number" : "8412348868"
+            },
+            {
+                "name" : "Mitchell Starc",
+                "phone_number" : "8412348869"
+            },
+            {
+                "name" : "Josh Hazelwood",
+                "phone_number" : "8412348870"
+            },
+            {
+                "name" : "Adam Zampa",
+                "phone_number" : "8412348871"
+            }
+        ]
+    },
+    {
+        "team_name": "South Africa",
+        "team_logo": "",
+        "city": "Indore,Madhya Pradesh, India",
+        "captain_name": "Aiden Markram",
+        "country_code": "91",
+        "players": [
+            {
+                "name" : "Quinton De Kock",
+                "phone_number" : "3574517770"
+            },
+            {
+                "name" : "Reeza Hendricks",
+                "phone_number" : "3574517771"
+            },
+            {
+                "name" : "Heinrich Klaasen",
+                "phone_number" : "3574517772"
+            },
+            {
+                "name" : "Aiden Markram",
+                "phone_number" : "3574517773"
+            },
+            {
+                "name" : "David Miller",
+                "phone_number" : "3574517774"
+            },
+            {
+                "name" : "Tristan Stubbs",
+                "phone_number" : "3574517775"
+            },
+            {
+                "name" : "Marco Jansen",
+                "phone_number" : "3574517776"
+            },
+            {
+                "name" : "Keshav Maharaj",
+                "phone_number" : "3574517777"
+            },
+            {
+                "name" : "Kagiso Rabada",
+                "phone_number" : "3574517778"
+            },
+            {
+                "name" : "Gerald Coetzee",
+                "phone_number" : "3574517779"
+            },
+            {
+                "name" : "Tabraiz Shamsi",
+                "phone_number" : "3574517780"
+            },
+            {
+                "name" : "Anrich Nortje",
+                "phone_number" : "3574517781"
+            }
+        ]
+    },
+    {
+        "team_name": "West Indies",
+        "team_logo": "",
+        "city": "Indore,Madhya Pradesh, India",
+        "captain_name": "Rovman Powell",
+        "country_code": "91",
+        "players": [
+            {
+                "name" : "Brandon King",
+                "phone_number" : "3674517710"
+            },
+            {
+                "name" : "Shai Hope",
+                "phone_number" : "3674517711"
+            },
+            {
+                "name" : "Nicholas Pooran",
+                "phone_number" : "3674517712"
+            },
+            {
+                "name" : "Rovman Powell",
+                "phone_number" : "3674517713"
+            },
+            {
+                "name" : "Romario Shepherd",
+                "phone_number" : "3674517714"
+            },
+            {
+                "name" : "Shimron Hetmyer",
+                "phone_number" : "3674517715"
+            },
+            {
+                "name" : "Andre Russell",
+                "phone_number" : "3674517716"
+            },
+            {
+                "name" : "Jason Holder",
+                "phone_number" : "3674517717"
+            },
+            {
+                "name" : "Akeal Hosein",
+                "phone_number" : "3674517718"
+            },
+            {
+                "name" : "Shamar Joseph",
+                "phone_number" : "3674517719"
+            },
+            {
+                "name" : "Alzarri Joseph",
+                "phone_number" : "3674517720"
+            },
+            {
+                "name" : "Johnson Charles",
+                "phone_number" : "3674517721"
+            }
+        ]
+    }
+]

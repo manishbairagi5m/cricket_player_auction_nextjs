@@ -1,5 +1,4 @@
 'use client'
-import CustomTextfield from "../StyledComponents/CustomTextfields";
 import Modal from "react-bootstrap/Modal";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -11,6 +10,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setForgetPassModal, setLoginModal, setNextTabModal, setOtpModal, setUserId } from "@/lib/slice/modalsSlice";
 import { ImCross } from "react-icons/im";
+import { TextField } from "@mui/material";
 
 
 export interface IAppProps {}
@@ -53,6 +53,7 @@ export default function ForgetPassword(props: IAppProps) {
     touched,
     setFieldValue,
     handleSubmit,
+    getFieldProps
   } = formik;
 
   const handleBack = (e:any) => {
@@ -86,7 +87,7 @@ export default function ForgetPassword(props: IAppProps) {
                   className="col-12 mb-2"
                   data-aos="flip-down"
                 >
-                  <CustomTextfield
+                  {/* <CustomTextfield
                     name="email"
                     label="Email"
                     placeHolder="Enter email"
@@ -94,7 +95,17 @@ export default function ForgetPassword(props: IAppProps) {
                     onChange={(e:any) => setFieldValue(e.target.name,e.target.value)}
                     helperText={touched.email && errors.email}
                     error={Boolean(errors.email && touched.email)}
-                  />
+                  /> */}
+                    <TextField
+                      fullWidth
+                      size="small"
+                      label="Email"
+                      variant="outlined"
+                      className="mb-2"
+                      {...getFieldProps("email")}
+                      helperText={touched.email && errors.email}
+                      error={Boolean(errors.email && touched.email)}
+                    />
                 </div>
                 <div className="col-6 mt-4">
                 <button className="main-button w-100" data-aos="fade-right" type="button"

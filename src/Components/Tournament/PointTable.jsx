@@ -6,12 +6,13 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-// import { getMatchList,getGroupWiseTeam,getTeamList } from "services/admin/Tournamet";
+import { getMatchList,getGroupWiseTeam,getTeamList } from "@/customApi/tournament";
+import { useRouter } from "next/router";
 
 
 
 export default function PointsTable (){
-//   const { id } = useParams()
+  const router = useRouter()
   const [matchData,setMatchData] = useState([])
   const [teamPoints,setTeamPoints] = useState([])
   const [groupsData,setGroupsData] = useState([])
@@ -23,76 +24,76 @@ export default function PointsTable (){
   }
 
   const getAllTeamDetails = async () => {
-    // let params = {tournament_id:id}
-    // await getTeamList(params).then((res) => {
-    //   if(res?.status){
-    //     let grpdata = []
-    //     for(let i=0;i<res.data.data.length;i++){
-    //       grpdata.push(res.data.data[i].team_name)
-    //     }
-    //     setGroupsData([{group_name:"group_A",team_name:[...grpdata]}])
-    //   }
-    // })
+    let params = {tournament_id: router.query.id }
+    await getTeamList(params).then((res) => {
+      if(res?.status){
+        let grpdata = []
+        for(let i=0;i<res.data.length;i++){
+          grpdata.push(res.data[i].team_name)
+        }
+        setGroupsData([{group_name:"group_A",team_name:[...grpdata]}])
+      }
+    })
   }
 
   const getGroupsData = async (teamdata) => {
-    // const params = { tournament_id : id}
-    // await getGroupWiseTeam(params).then((res) => {
-    //   if(res?.status){
-    //     if(res.data.data.length > 0){
-    //       setGroupsData(res.data.data)
-    //     }else{
-    //       if(Object.keys(teamdata).length > 0){
-    //         setGroupsData([{group_name:"group_A",team_name:[...Object.keys(teamdata)]}])
-    //       }else{
-    //         getAllTeamDetails()
-    //       }
-    //     }
-    //   }
-    // })
+    const params = { tournament_id : router.query.id}
+    await getGroupWiseTeam(params).then((res) => {
+      if(res?.status){
+        if(res.data.length > 0){
+          setGroupsData(res.data)
+        }else{
+          if(Object.keys(teamdata).length > 0){
+            setGroupsData([{group_name:"group_A",team_name:[...Object.keys(teamdata)]}])
+          }else{
+            getAllTeamDetails()
+          }
+        }
+      }
+    })
   }
 
   const getData = async () => {
-    // const params = { tournament_id : id}
-    // await getMatchList(params).then((res) => {
-    //   if(res?.status){
-    //     setMatchData(res.data.data)
-    //     let resData = res.data.data
-    //     let obj = {match:1,win:0,loose:0,tied:0,no_result:0,pts:0,nrr:0}
-    //     let data = {}
-    //     for(let i=0;i<resData.length;i++){
-    //       if(resData[i]?.match?.outcome){
-    //         let teamA = resData[i].teamA_name
-    //         let teamB = resData[i].teamB_name
-    //         data[teamA] = data[teamA] ? {...data[teamA], match:data[teamA].match+1 || 1} : {...obj}
-    //         data[teamB] = data[teamB] ? {...data[teamB], match:data[teamB].match+1 || 1} : {...obj}
-    //         if(resData[i].match?.outcome?.winner === resData[i].teamA_id){
-    //           data[teamA] = {...data[teamA], win : data[teamA].win+1 || 1,pts : data[teamA].pts+2 || 2}
-    //           data[teamB] = {...data[teamB], loose : data[teamB].loose+1 || 1,}
-    //         }else if(resData[i].match?.outcome?.winner === resData[i].teamB_id){
-    //           data[teamB] = {...data[teamB], win : data[teamB].win+1 || 1,pts : data[teamB].pts+2 || 2}
-    //           data[teamA] = {...data[teamA], loose : data[teamA].loose+1 || 1,}
-    //         }else{
-    //           // if(resData[i].match.outcome?.winner){
-    //             data[teamA] = {...data[teamA], tied : data[teamA].tied+1 || 1,pts : data[teamA].pts+1 || 1}
-    //             data[teamB] = {...data[teamB], tied : data[teamB].tied+1 || 1,pts : data[teamB].pts+1 || 1}
-    //           // }
-    //           // else{
-    //           //   data[teamA] = {...data[teamA],no_result : data[teamA].no_result+1 || 1}
-    //           //   data[teamB] = {...data[teamB],no_result : data[teamB].no_result+1 || 1}
-    //           // }
-    //         }
-    //         data[teamA].nrr += resData[i].match.innings[0].net_run_rate
-    //         data[teamB].nrr += resData[i].match.innings[1].net_run_rate
-    //       }else{
-    //         data[resData[i].teamA_name] = data[resData[i].teamA_name] ? {...data[resData[i].teamA_name]} : {...obj,match:0}
-    //         data[resData[i].teamB_name] = data[resData[i].teamB_name] ? {...data[resData[i].teamB_name]} : {...obj,match:0}
-    //       }
-    //     }
-    //     getGroupsData(data)
-    //     setTeamPoints(data)
-    //   }
-    // })
+    const params = { tournament_id : router.query.id}
+    await getMatchList(params).then((res) => {
+      if(res?.status){
+        setMatchData(res.data)
+        let resData = res.data
+        let obj = {match:1,win:0,loose:0,tied:0,no_result:0,pts:0,nrr:0}
+        let data = {}
+        for(let i=0;i<resData.length;i++){
+          if(resData[i]?.match?.outcome){
+            let teamA = resData[i].teamA_name
+            let teamB = resData[i].teamB_name
+            data[teamA] = data[teamA] ? {...data[teamA], match:data[teamA].match+1 || 1} : {...obj}
+            data[teamB] = data[teamB] ? {...data[teamB], match:data[teamB].match+1 || 1} : {...obj}
+            if(resData[i].match?.outcome?.winner === resData[i].teamA_id){
+              data[teamA] = {...data[teamA], win : data[teamA].win+1 || 1,pts : data[teamA].pts+2 || 2}
+              data[teamB] = {...data[teamB], loose : data[teamB].loose+1 || 1,}
+            }else if(resData[i].match?.outcome?.winner === resData[i].teamB_id){
+              data[teamB] = {...data[teamB], win : data[teamB].win+1 || 1,pts : data[teamB].pts+2 || 2}
+              data[teamA] = {...data[teamA], loose : data[teamA].loose+1 || 1,}
+            }else{
+              // if(resData[i].match.outcome?.winner){
+                data[teamA] = {...data[teamA], tied : data[teamA].tied+1 || 1,pts : data[teamA].pts+1 || 1}
+                data[teamB] = {...data[teamB], tied : data[teamB].tied+1 || 1,pts : data[teamB].pts+1 || 1}
+              // }
+              // else{
+              //   data[teamA] = {...data[teamA],no_result : data[teamA].no_result+1 || 1}
+              //   data[teamB] = {...data[teamB],no_result : data[teamB].no_result+1 || 1}
+              // }
+            }
+            data[teamA].nrr += resData[i].match.innings[0].net_run_rate
+            data[teamB].nrr += resData[i].match.innings[1].net_run_rate
+          }else{
+            data[resData[i].teamA_name] = data[resData[i].teamA_name] ? {...data[resData[i].teamA_name]} : {...obj,match:0}
+            data[resData[i].teamB_name] = data[resData[i].teamB_name] ? {...data[resData[i].teamB_name]} : {...obj,match:0}
+          }
+        }
+        getGroupsData(data)
+        setTeamPoints(data)
+      }
+    })
   }
 
   useEffect(() => {

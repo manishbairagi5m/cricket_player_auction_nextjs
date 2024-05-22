@@ -64,9 +64,6 @@ export default function ChangePassword({changePasswordModal, setChangePasswordMo
   }); 
 
   const logoutClickHandler = () => {
-    // if (typeof window !== "undefined") {
-    //   window.localStorage.removeItem("accessToken");
-    // }
     signOut({ redirect: false, callbackUrl: "/" });
   };
 
